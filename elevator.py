@@ -1,3 +1,5 @@
+import copy
+
 elevators = list()
 highestFloor = 0
 numElevators = 0
@@ -5,8 +7,6 @@ finished = False
 k = 0
 global solutions
 solutions = []
-global oldElevators
-oldElevators = []
 
 
 class Elevator:
@@ -44,23 +44,6 @@ def get_num(x):
     return int(''.join(ele for ele in x if ele.isdigit()))
 
 
-def move_elevators():
-    global a
-    for i in range(0, len(elevators)):
-        if elevators[i].elevatorNum is not a[k].elevatorNum:
-            if elevators[i].currentFloor is highestFloor:
-                elevators[i].direction = 0
-            elif elevators[i].currentFloor is elevators[i].endFloor:
-                elevators[i].direction = 0
-            elif elevators[i].currentFloor is elevators[i].startFloor:
-                elevators[i].direction = 1
-
-            if elevators[i].direction is 1:
-                elevators[i].currentFloor += 1
-            elif elevators[i].direction is 0:
-                elevators[i].currentFloor -= 1
-
-
 def make_elevator_from_string(info):
     # create an elevator
     temp = Elevator()
@@ -84,107 +67,92 @@ def make_elevator_from_string(info):
 
 
 def construct_candidates(a, k, timepassed):
-    global oldElevators
     candidates = []
-    # peter isn't on an elevator the first time
+
     if len(a) is 0:
+        # peter isn't on an elevator the first time
         for i in range(0, len(elevators)):
             # if the elevator is currently at peter's floor
-            if elevators[i].currentFloor is 0:
+            if elevators[i].startFloor is 0:
                 candidates.append(elevators[i])
-
     else:
         # find an elevator that is at peter's floor
         for i in range(0, len(elevators)):
             # if the elevator's top or bottom is where peter currently is
-            if (a[k].currentFloor is elevators[i].endFloor) | (a[k].currentFloor is elevators[i].startFloor):
-                if a[k].elevatorNum is not elevators[i].elevatorNum:
+            if (elevators[peter.elevatorNum-1].endFloor is elevators[i].endFloor) | (elevators[peter.elevatorNum-1].endFloor is elevators[i].startFloor):
+                if elevators[peter.elevatorNum-1].elevatorNum is not elevators[i].elevatorNum:
                     candidates.append(elevators[i])
 
     return candidates
 
 
+def move_elevators():
+    for i in range(0, len(elevators)):
+        if elevators[i].currentFloor is highestFloor:
+            elevators[i].direction = 0
+        elif elevators[i].currentFloor is elevators[i].endFloor:
+            elevators[i].direction = 0
+        elif elevators[i].currentFloor is elevators[i].startFloor:
+            elevators[i].direction = 1
+
+        if elevators[i].direction is 1:
+            elevators[i].currentFloor += 1
+        elif elevators[i].direction is 0:
+            elevators[i].currentFloor -= 1
+
+
 def make_move(a, k, timepassed):
-    # move the elevator we are on to it's end floor
-    a[k].currentFloor = a[k].endFloor
-    timepassed += a[k].endFloor - a[k].startFloor
+    timetaken = 0
+    if len(a) > 1:
+        # waiting for the elevator
+        while a[k-1].currentFloor is not elevators[peter.elevatorNum-1].endFloor:
+            move_elevators()
+            timetaken += 1
+    if len(a) is 1:
+        peter.elevatorNum = a[k-1].elevatorNum
+    # move elevator to the top
+    x = elevators[peter.elevatorNum-1].endFloor - elevators[peter.elevatorNum-1].currentFloor
 
-    # move all the elevators this much, except the one we are on
-    for i in range(0, timepassed):
-        for j in range(0, len(elevators)):
-            if elevators[j].elevatorNum is not a[k].elevatorNum:
-                if elevators[j].currentFloor is elevators[j].endFloor:
-                    elevators[j].direction = 0
-                elif elevators[j].currentFloor is elevators[j].startFloor:
-                    elevators[j].direction = 1
+    for i in range(x):
+        move_elevators()
+        timetaken += 1
 
-                if elevators[j].direction is 1:
-                    elevators[j].currentFloor += 1
-                elif elevators[j].direction is 0:
-                    elevators[j].currentFloor -= 1
-    return timepassed
+    return timetaken
 
 
-def unmake_move(a, k, timepassed):
-    for i in range(0, timepassed):
-        if a[k].currentFloor is a[k].endFloor:
-            a[k].currentFloor -= 1
-            a[k].direction = 0
-        elif a[k].currentFloor is a[k].startFloor:
-            a[k].currentFloor += 1
-            a[k].direction = 1
-        elif a[k].direction is 0:
-            a[k].currentFloor -= 1
-        elif a[k].direction is 1:
-            a[k].currentFloor += 1
-
-    for i in range(0, timepassed):
-        for j in range(0, len(elevators)):
-            if elevators[j].currentFloor is elevators[j].endFloor:
-                elevators[j].direction = 0
-            elif elevators[j].currentFloor is elevators[j].startFloor:
-                elevators[j].direction = 1
-
-            if elevators[j].direction is 1:
-                elevators[j].currentFloor += 1
-            elif elevators[j].direction is 0:
-                elevators[j].currentFloor -= 1
+def unmake_move(a, k, timetaken):
+    for i in range(0, timetaken):
+        move_elevators()
 
 
 def is_a_solution(a, k):
     if len(a) is 0:
         return False
-    if a[k].endFloor is highestFloor:
+    if elevators[peter.elevatorNum-1].currentFloor is highestFloor:
         return True
 
 
-def backtrack(a, k, timepassed):
-    c = []  # candidates for next move
+def backtrack(a, k, timepassed, first):
     global solutions
     # if the current elevator we are on goes to the top
     if is_a_solution(a, k):
-        solutions.append(timepassed + (a[k].currentFloor - a[k].endFloor))
+        if timepassed not in solutions:
+            solutions.append(timepassed)
     # no? then get on another elevator
     else:
-        if len(a) > 1:
-            k += 1
-        else:
-            k = 0
+        k += 1
         c = construct_candidates(a, k, timepassed)
         for i in range(0, len(c)):
-            a[i] = c[i]
-            make_move(a, k, timepassed)
-            backtrack(a, k, timepassed)
-            unmake_move(a, k, timepassed)
-            if finished:
-                break
-
-    return timepassed
+            a.append(c[i])
+            timetaken = make_move(a, k, timepassed)
+            timepassed += timetaken
+            backtrack(a, k, timepassed, False)
+            unmake_move(a, k, timetaken)
+            timepassed -= timetaken
 
 
 def main():
     open_file()
-
     # initial set up
     # peter on 0th floor, no time passed
     peter.currentFloor = 0
@@ -195,10 +163,11 @@ def main():
     a = []
 
     # start the backtracking
-    backtrack(a, k, timepassed)
+    backtrack(a, k, timepassed, True)
 
     global solutions
-    print("time(", min(solutions), ")")
+    for i in range(0, len(solutions)):
+        print("time(", solutions[i], ")")
 
 
 main()
