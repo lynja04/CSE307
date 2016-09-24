@@ -5,10 +5,8 @@ finished = False
 k = 0
 global solutions
 solutions = []
-global a
 global oldElevators
 oldElevators = []
-a = []
 
 
 class Elevator:
@@ -85,8 +83,7 @@ def make_elevator_from_string(info):
     elevators.append(temp)
 
 
-def construct_candidates(k, timepassed):
-    global a
+def construct_candidates(a, k, timepassed):
     global oldElevators
     candidates = []
     # peter isn't on an elevator the first time
@@ -95,39 +92,24 @@ def construct_candidates(k, timepassed):
             # if the elevator is currently at peter's floor
             if elevators[i].currentFloor is 0:
                 candidates.append(elevators[i])
-                return candidates
 
-    oldElevators.append(a[k].elevatorNum)
-
-    for i in range(0, len(elevators)):
-        # if the elevator is currently at peter's floor
-        if a[k].currentFloor is elevators[i].currentFloor:
-            if a[k].elevatorNum is not elevators[i].elevatorNum:
-                if not elevators[i].elevatorNum in oldElevators:
-                    if elevators[i].currentFloor is elevators[i].startFloor | elevators[i].currentFloor is elevators[i].endFloor:
-                        candidates.append(elevators[i])
-
-    if a[k].elevatorNum in oldElevators:
-        for i in range(0, timepassed):
-            move_elevators()
+    else:
+        # find an elevator that is at peter's floor
         for i in range(0, len(elevators)):
-            # if the elevator is currently at peter's floor
-            if a[k].currentFloor is elevators[i].currentFloor:
+            # if the elevator's top or bottom is where peter currently is
+            if (a[k].currentFloor is elevators[i].endFloor) | (a[k].currentFloor is elevators[i].startFloor):
                 if a[k].elevatorNum is not elevators[i].elevatorNum:
-                    if elevators[i].currentFloor is elevators[i].startFloor:
-                        candidates.append(elevators[i])
-                    elif elevators[i].currentFloor is elevators[i].endFloor:
-                        candidates.append(elevators[i])
+                    candidates.append(elevators[i])
+
     return candidates
 
 
-def make_move(k, timepassed):
-    global a
+def make_move(a, k, timepassed):
     # move the elevator we are on to it's end floor
     a[k].currentFloor = a[k].endFloor
     timepassed += a[k].endFloor - a[k].startFloor
 
-    # move all the elevators this much
+    # move all the elevators this much, except the one we are on
     for i in range(0, timepassed):
         for j in range(0, len(elevators)):
             if elevators[j].elevatorNum is not a[k].elevatorNum:
@@ -140,10 +122,10 @@ def make_move(k, timepassed):
                     elevators[j].currentFloor += 1
                 elif elevators[j].direction is 0:
                     elevators[j].currentFloor -= 1
+    return timepassed
 
 
-def unmake_move(k, timepassed):
-    global a
+def unmake_move(a, k, timepassed):
     for i in range(0, timepassed):
         if a[k].currentFloor is a[k].endFloor:
             a[k].currentFloor -= 1
@@ -176,9 +158,8 @@ def is_a_solution(a, k):
         return True
 
 
-def backtrack(k, timepassed):
+def backtrack(a, k, timepassed):
     c = []  # candidates for next move
-    global a
     global solutions
     # if the current elevator we are on goes to the top
     if is_a_solution(a, k):
@@ -189,12 +170,12 @@ def backtrack(k, timepassed):
             k += 1
         else:
             k = 0
-        c = construct_candidates(k, timepassed)
+        c = construct_candidates(a, k, timepassed)
         for i in range(0, len(c)):
-            a.append(c[i])
-            make_move(k, timepassed)
-            backtrack(k, timepassed)
-            unmake_move(k, timepassed)
+            a[i] = c[i]
+            make_move(a, k, timepassed)
+            backtrack(a, k, timepassed)
+            unmake_move(a, k, timepassed)
             if finished:
                 break
 
@@ -211,9 +192,10 @@ def main():
     finished = False
     k = 0
     timepassed = 0
+    a = []
 
     # start the backtracking
-    backtrack(k, timepassed)
+    backtrack(a, k, timepassed)
 
     global solutions
     print("time(", min(solutions), ")")
