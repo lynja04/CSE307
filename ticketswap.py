@@ -1,3 +1,7 @@
+k = 0
+global solutions
+solutions = []
+
 class Passenger:
     pass
 
@@ -40,10 +44,45 @@ def makePassengerFromString(string):
     # add them to the list
     passengers.append(temp)
 
+
+def construct_candidates(a, k):
+    candidates = []
+    return candidates
+
+
+# def make_move():
+
+
+# def unmake_move():
+
+
+#def is_a_solution():
+
+
+def backtrack(a, k, profitLoss):
+    if is_a_solution(a, k):
+        if profitLoss not in solutions:
+            solutions.append(profitLoss)
+    else:
+        k += 1
+        c = construct_candidates(a, k)
+        for i in range(0, len(c)):
+            a.insert(k, c[i])
+            #make_move()
+            backtrack(a, k, profitLoss)
+            #unmake_move()
+
+
+
 def main():
     openFile()
 
-    for i in range(0, len(passengers)):
-        print(passengers[i].name)
+    a = []
+    k = 0
+    profitLoss = 0
+
+    backtrack(a, k, profitLoss)
+
+
 
 main()
