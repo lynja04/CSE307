@@ -1,3 +1,5 @@
+import sys
+
 elevators = list()
 highestFloor = 0
 numElevators = 0
@@ -17,9 +19,9 @@ peter = Peter()
 
 
 # open and parse file
-def open_file():
+def open_file(fileName):
     # open input file and parse the data
-    r = open("elevatortest.txt", "r")
+    r = open(fileName, "r")
     for line in r:
         array = line.split(".")
         # go through the array and get the highest floor
@@ -143,8 +145,8 @@ def backtrack(a, k, timepassed):
             timepassed -= timetaken
 
 
-def main():
-    open_file()
+def main(fileName):
+    open_file(fileName)
     # initial set up
     # peter on 0th floor, no time passed
     peter.currentFloor = 0
@@ -169,4 +171,4 @@ def main():
     print("min_time(", min(solutions), ").")
 
 
-main()
+main(sys.argv[1])

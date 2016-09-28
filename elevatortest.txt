@@ -2,5 +2,5 @@ top(10).
 elevators(4).
 elevator(1,0,5).
 elevator(2,5,10).
-elevator(3,5,7).
-elevator(4,7,10).
+elevator(3,5,8).
+elevator(4,8,10).
