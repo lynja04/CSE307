@@ -1,0 +1,4 @@
+passenger(p1, 1, 4).
+passenger(p2, 2, 6).
+passenger(p3, 4, 5).
+passenger(p4, 6, 7).
