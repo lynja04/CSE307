@@ -1,5 +1,5 @@
 import sys
-
+import itertools
 
 class Passenger:
     pass
@@ -14,9 +14,9 @@ passengers = list()
 subway = Subway()
 
 # open a file and make passengers
-def openFile():
+def openFile(fileName):
     # open input file and parse the data
-    r = open("tickettest2.txt", "r")
+    r = open(fileName, "r")
     for line in r:
         array = line.split(".")
         # go through the array and get the passengers
@@ -91,21 +91,19 @@ def calculateTotalCost():
     totalCost = 0
     for i in range(0, len(subway.passengers)):
         stationsTraveled = subway.passengers[i].exitStation - subway.passengers[i].startStation
-
         price = createPrice(stationsTraveled)
-
-        print(price)
         totalCost += price
         round(totalCost, 1)
 
     return float(format(totalCost, '.1f'))
 
 
-def main():
-    openFile()
+def main(fileName):
+    openFile(fileName)
 
     startList = []
     exitList = []
+    priceList = []
 
     for i in range(0, len(passengers)):
         exitList.append(passengers[i].exitStation)
@@ -115,7 +113,6 @@ def main():
 
     subway.startStation = min(startList)
     subway.currentStation = 0
-    subway.passengerAmt = len(passengers)
     subway.endStation = max(exitList)
     subway.passengers = []
 
@@ -125,28 +122,16 @@ def main():
 
     totalCost = calculateTotalCost()
 
-    Matrix = [[0 for x in range(2)] for y in range(len(passengers))]
+    perms = list(itertools.permutations(startList))
 
-    for i in range(0, len(subway.passengers)):
-        Matrix[i][0] = subway.passengers[i].startStation
-        Matrix[i][1] = subway.passengers[i].exitStation
+    for i in range(0, len(perms)):
+        for j in range(0, len(subway.passengers)):
+            subway.passengers[j].startStation = perms[i][j]
+        priceList.append(calculateTotalCost())
 
-    result = map(tuple, Matrix)
-    for i in range(0, len(result)):
+    for i in range(0, len(priceList)):
+        priceList[i] = totalCost - priceList[i]
 
-        print(result[i])
+    print("loss(", float(format((max(priceList)), '.1f')), ").")
 
-    # for i in range(0, len(subway.passengers)):
-    #     print(Matrix[i][0])
-    #     print(Matrix[i][1])
-
-
-    reducedCost = calculateTotalCost()
-    print(reducedCost)
-
-    print("loss(", float(format((totalCost-reducedCost), '.1f')), ").")
-
-    global solutions
-    #print("loss(", max(solutions), ").")
-
-main()
+main(sys.argv[1])
