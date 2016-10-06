@@ -20,7 +20,7 @@ peter = Peter()
 
 
 # open and parse file
-def open_file():
+def open_file(fileName):
     global elevators
     elevators = []
     # open input file and parse the data
@@ -114,19 +114,19 @@ def make_move(a, k, currentFloor):
     return timetaken
 
 
-def unmake_move(a, k, currentFloor, prevElevators):
-    while a[k-1].currentFloor is not currentFloor:
-        move_elevators(1)
+def unmake_move(a, prevElevators, c):
+    for i in range(0, len(elevators)):
+        elevators[i] = prevElevators[i]
 
     for i in range(0, len(elevators)):
-        x = elevators[i].endFloor - elevators[i].startFloor
-        if x % 2 is 0:
-            if elevators[i].direction is 1:
-                elevators[i].direction = 0
-            else:
-                elevators[i].direction = 1
-    # for i in range(0, len(elevators)):
-    #     elevators[i] = copy.deepcopy(prevElevators[i])
+        for j in range(0, len(a)):
+            if a[j].elevatorNum is elevators[i].elevatorNum:
+                a[j] = elevators[i]
+
+    for i in range(0, len(elevators)):
+        for j in range(0, len(c)):
+            if c[j].elevatorNum is elevators[i].elevatorNum:
+                c[j] = elevators[i]
 
 
 def is_a_solution(a, k):
@@ -140,9 +140,6 @@ def backtrack(a, k, timepassed):
     if is_a_solution(a, k):
         if timepassed not in solutions:
             solutions.append(timepassed)
-            for i in range(0, len(a)):
-                print(a[i].elevatorNum)
-            print("Finish time: ", timepassed)
     # no? then get on another elevator
     else:
         k += 1
@@ -154,13 +151,13 @@ def backtrack(a, k, timepassed):
             timetaken = make_move(a, k, currentFloor)
             timepassed += timetaken
             backtrack(a, k, timepassed)
-            unmake_move(a, k, currentFloor, prevElevators)
+            unmake_move(a, prevElevators, c)
             a.pop(k)
             timepassed -= timetaken
 
 
-def main():
-    open_file()
+def main(fileName):
+    open_file(fileName)
     # initial set up
     # peter on 0th floor, no time passed
     peter.currentFloor = 0
@@ -181,7 +178,7 @@ def main():
             backtrack(a, k, timepassed)
             # reset
             timepassed = 0
-            open_file()
+            open_file(fileName)
             k = 0
             a = []
 
@@ -189,4 +186,4 @@ def main():
     print("min_time(", min(solutions), ").")
 
 
-main()
+main(sys.argv[1])
