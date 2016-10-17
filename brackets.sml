@@ -44,9 +44,21 @@ fun createListsofList(L, prefix, x) =
 		else createListsofList(tl(L), hd(L)::prefix, x-1);
 (****************************)
 
+(* Helper Helper *)
+fun helpTheHelper(L, index) =
+		if hd(L) = [] then 0
+		else if index mod 2 = 0 then (width(L)*height(L))-helpTheHelper(removeLast((removeFirst(L), length(removeFirst(L))-1)), index+1)
+		else (width(L)*height(L))+helpTheHelper(removeLast((removeFirst(L), length(removeFirst(L))-1)), index+1)
+(****************************)
+
+(* Brackets Helper *)
+fun bracketsHelper(L) =
+		if L = [] then 0
+		else helpTheHelper(hd(L), 0) + bracketsHelper(tl(L));
+(****************************)
+
 (* Main function *)
 fun brackets(L) =
-		if L = [] then []
-		else [height(L)]::[width(L)]::createListsofList(L, [], 0);
+		bracketsHelper(createListsofList(L, [], 0));
 
 brackets([0,0,0,1,1,1]);
