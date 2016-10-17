@@ -11,6 +11,8 @@ fun powerSet(L) =
     if L=[] then [[]]
     else powerSet(tl(L)) @ insert_all(hd(L),powerSet(tl(L)));
 
-powerSet([]);
-powerSet([1,2,3]);
-powerSet([2,3]);
+fun survey(numOfPeople, listOfIntroProtocols, confidences) =
+    
+
+
+survey(6,[(1,0,0), (2,0,1), (3,1,2), (4,2,1), (5,0,0)], [13,3,6,20,10,15]);

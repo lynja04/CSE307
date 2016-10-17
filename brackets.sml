@@ -9,7 +9,7 @@
 		Delete first 0 in that list and it's closing 1
 		Repeat and alternate adding/subtracting area *)
 
-(* height and width methods *)
+(* height, width and area methods *)
 (* Get the height of the List, which is the highest positive number *)
 fun height(L) =
 		if hd(L) = 1 then 0
@@ -20,6 +20,8 @@ fun width(L) =
 fun length(L) =
 		if L = [] then 0
 		else 1 + length(tl(L));
+fun area(L) =
+		width(L) * height(L);
 (****************************)
 
 (* Remove first and list element of the list *)
@@ -29,6 +31,8 @@ fun removeFirst(L) =
 fun removeLast(L, x) =
 		if x = 0 then []
 		else hd(L)::removeLast(tl(L), x-1);
+fun trim(L) =
+		removeLast((removeFirst(L), length(removeFirst(L))-1));
 (****************************)
 
 (* Lists of lists methods *)
@@ -46,19 +50,20 @@ fun createListsofList(L, prefix, x) =
 
 (* Helper Helper *)
 fun helpTheHelper(L, index) =
-		if hd(L) = [] then 0
-		else if index mod 2 = 0 then (width(L)*height(L))-helpTheHelper(removeLast((removeFirst(L), length(removeFirst(L))-1)), index+1)
-		else (width(L)*height(L))+helpTheHelper(removeLast((removeFirst(L), length(removeFirst(L))-1)), index+1)
+		if L = [] then 0
+		else if (index mod 2 = 0) then area(L) + helpTheHelper(trim(L), index+1)
+		else ~(area(L)) + helpTheHelper(trim(L), index+1);
 (****************************)
 
 (* Brackets Helper *)
 fun bracketsHelper(L) =
-		if L = [] then 0
+		if hd(L) = [] then 0
 		else helpTheHelper(hd(L), 0) + bracketsHelper(tl(L));
 (****************************)
 
 (* Main function *)
 fun brackets(L) =
 		bracketsHelper(createListsofList(L, [], 0));
+(****************************)
 
-brackets([0,0,0,1,1,1]);
+brackets([0,0,1,0,0,1,1,1]);
