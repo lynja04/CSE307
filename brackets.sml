@@ -55,6 +55,9 @@ fun helpTheHelper(L, index) =
 		else ~(area(L)) + helpTheHelper(trim(L), index+1);
 (****************************)
 
+fun areaOfWholeList() =
+		
+
 (* Brackets Helper *)
 fun bracketsHelper(L) =
 		if hd(L) = [] then 0
