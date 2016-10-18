@@ -1,19 +1,16 @@
 (* James Lynn CSE 307 Homework 3 *)
 (* Brackets *)
 
-(* The algorithm:
-		Read the list until total is 0.
-		Get the highest positive number as the height.
-		Get the length - 1 as the Width
-		Calculate the area
-		Delete first 0 in that list and it's closing 1
-		Repeat and alternate adding/subtracting area *)
-
 (* height, width and area methods *)
 (* Get the height of the List, which is the highest positive number *)
-fun height(L) =
-		if hd(L) = 1 then 0
-		else 1 + height(tl(L));
+fun max(L, x) =
+		if L = [] then x
+		else if hd(L) > x then max(tl(L), hd(L))
+		else max(tl(L), x);
+fun height(L, x) =
+		if L = [] then []
+		else if hd(L) = 0 then x+1::height(tl(L), x+1)
+		else x-1::height(tl(L), x-1);
 (* Get Width of the List, which is length - 1 *)
 fun width(L) =
 		length(L)-1;
@@ -21,7 +18,7 @@ fun length(L) =
 		if L = [] then 0
 		else 1 + length(tl(L));
 fun area(L) =
-		width(L) * height(L);
+		width(L) * max(height(L, 0), ~1);
 (****************************)
 
 (* Remove first and list element of the list *)
@@ -48,25 +45,38 @@ fun createListsofList(L, prefix, x) =
 		else createListsofList(tl(L), hd(L)::prefix, x-1);
 (****************************)
 
-(* Helper Helper *)
-fun helpTheHelper(L, index) =
-		if L = [] then 0
-		else if (index mod 2 = 0) then area(L) + helpTheHelper(trim(L), index+1)
-		else ~(area(L)) + helpTheHelper(trim(L), index+1);
+(* Check if all the lists in the list are empty *)
+fun checkIfListEmpty(L) =
+		if L = [] then true
+		else if hd(L) <> [] then false
+		else checkIfListEmpty(tl(L));
 (****************************)
 
-fun areaOfWholeList() =
-		
+(* Get the area of all the lists within the list *)
+fun areaOfWholeList(L, sign) =
+		if checkIfListEmpty(L) = true then 0
+		else if hd(L) = [] then areaOfWholeList(tl(L), sign)
+		else if sign = 0 then area(hd(L)) + areaOfWholeList(tl(L), 0)
+		else ~(area(hd(L))) + areaOfWholeList(tl(L), 1);
+(****************************)
+
+(* Helpers the helper by triming and breaking into more lists *)
+fun helperHelper(L) =
+		if checkIfListEmpty(L) = true then []
+		else if hd(L) = [] then helperHelper(tl(L))
+		else createListsofList(trim(hd(L)), [], 0) @ helperHelper(tl(L));
+(****************************)
 
 (* Brackets Helper *)
-fun bracketsHelper(L) =
-		if hd(L) = [] then 0
-		else helpTheHelper(hd(L), 0) + bracketsHelper(tl(L));
+fun bracketsHelper(L, sign) =
+		if L = [] then 0
+		else if sign = 0 then areaOfWholeList(L, 0) + bracketsHelper(helperHelper(L), 1)
+		else areaOfWholeList(L, 1) + bracketsHelper(helperHelper(L), 0);
 (****************************)
 
 (* Main function *)
 fun brackets(L) =
-		bracketsHelper(createListsofList(L, [], 0));
+		bracketsHelper(createListsofList(L, [], 0), 0);
 (****************************)
 
-brackets([0,0,1,0,0,1,1,1]);
+brackets([0,0,1,1,0,0,1,0,0,1,1,1]);
