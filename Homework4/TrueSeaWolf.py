@@ -9,11 +9,11 @@
 tokens = (
     'NUMBER', 'STRING', 'LIST',
     'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'EQUALS', 'NOTEQUALS', 'MODULUS', 'EXPONENT', 'FLOORDIVISION',
-    'GREATERTHAN', 'LESSTHAN', 'LPAREN', 'RPAREN', 'GREATERTHANEQUAL', 'LESSTHANEQUAL'
+    'GREATERTHAN', 'LESSTHAN', 'LPAREN', 'RPAREN', 'GREATERTHANEQUAL', 'LESSTHANEQUAL',
+    'AND', 'OR'
 )
 
 # Tokens
-
 t_PLUS = r'\+'
 t_MINUS = r'-'
 t_TIMES = r'\*'
@@ -29,6 +29,8 @@ t_GREATERTHAN = r'>'
 t_LESSTHAN = r'<'
 t_GREATERTHANEQUAL = r'>='
 t_LESSTHANEQUAL = r'<='
+t_AND = r'and'
+t_OR = r'or'
 
 
 def t_NUMBER(t):
@@ -38,8 +40,8 @@ def t_NUMBER(t):
 
 
 def t_STRING(t):
-    r'"([^"\n]|(\\"))*"$'
-    t.value = str(t.value)
+    r'"([^"\n]|(\\"))*"'
+    t.value = str(t.value[1:-1])
     return t
 
 
@@ -88,8 +90,13 @@ def p_expression_binop(p):
                   | expression GREATERTHANEQUAL expression
                   | expression LESSTHANEQUAL expression
                   | expression EQUALS expression
-                  | expression NOTEQUALS expression'''
+                  | expression NOTEQUALS expression
+                  | expression AND expression
+                  | expression OR expression'''
     if p[2] == '+':
+        if type(p[1]) == str and type(p[3]) == str:
+            p[1] = p[1][:-1]
+            p[3] = p[3][1:]
         p[0] = p[1] + p[3]
     elif p[2] == '-':
         p[0] = p[1] - p[3]
@@ -137,6 +144,21 @@ def p_expression_binop(p):
             p[0] = "false"
         else:
             p[0] = "true"
+    elif p[2] == 'and':
+        if p[1] == "true":
+            if p[3] == "true":
+                p[0] = "true"
+            else:
+                p[0] = "false"
+        else:
+            p[0] = "false"
+    elif p[2] == 'or':
+        if p[1] == "true":
+            p[0] = "true"
+        elif p[3] == "true":
+            p[0] = "true"
+        else:
+            p[0] = "false"
 
 
 def p_expression_uminus(p):
@@ -157,10 +179,7 @@ def p_expression_number(p):
 def p_expression_string(p):
     'expression : STRING'
     p[0] = p[1]
-
-
-def p_error(p):
-    print("Syntax error at '%s'" % p.value)
+    p[0] = "'" + p[0] + "'"
 
 
 import ply.yacc as yacc
@@ -174,3 +193,4 @@ while True:
     except EOFError:
         break
     yacc.parse(s)
+
