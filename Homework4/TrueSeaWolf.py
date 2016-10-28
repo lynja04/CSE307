@@ -140,11 +140,7 @@ def p_expression_operators(p):
                   | expression OR expression
                   | expression IN expression'''
     if p[2] == '+':
-        if typesMatch(p[1], p[2]):
-            if type(p[1]) == chr:
-                str(p[1])
-            elif type(p[3]) == chr:
-                str(p[3])
+        if typesMatch(p[1], p[3]):
             p[0] = p[1] + p[3]
         else:
             p[0] = "SEMANTIC ERROR"
