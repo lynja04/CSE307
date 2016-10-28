@@ -7,10 +7,10 @@
 # ------------------------- #
 
 tokens = (
-    'NUMBER', 'STRING', 'LIST',
+    'INTEGER', 'REAL', 'STRING', 'LBRACKET', 'RBRACKET', 'COMMA',
     'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'EQUALS', 'NOTEQUALS', 'MODULUS', 'EXPONENT', 'FLOORDIVISION',
     'GREATERTHAN', 'LESSTHAN', 'LPAREN', 'RPAREN', 'GREATERTHANEQUAL', 'LESSTHANEQUAL',
-    'AND', 'OR'
+    'AND', 'OR', 'IN', 'NOT'
 )
 
 # Tokens
@@ -31,16 +31,27 @@ t_GREATERTHANEQUAL = r'>='
 t_LESSTHANEQUAL = r'<='
 t_AND = r'and'
 t_OR = r'or'
+t_IN = r'in'
+t_NOT = r'not'
+t_LBRACKET = r'\['
+t_RBRACKET = r'\]'
+t_COMMA = ","
 
 
-def t_NUMBER(t):
+def t_INTEGER(t):
     r'\d+'
     t.value = int(t.value)
     return t
 
 
+def t_REAL(t):
+    r'-?\d*(\d\.|\.\d)\d*'
+    t.value = float(t.value)
+    return t
+
+
 def t_STRING(t):
-    r'"([^"\n]|(\\"))*"'
+    r'"([^\\"]*|\\.)*"'
     t.value = str(t.value[1:-1])
     return t
 
@@ -74,7 +85,27 @@ precedence = (
 
 def p_statement_expr(p):
     'statement : expression'
+    if type(p[1]) == str:
+        p[1] = "'" + p[1] + "'"
     print(p[1])
+
+
+def p_expression_listExpression(p):
+    'expression : LBRACKET innerList RBRACKET'
+    p[0] = p[2]
+
+
+def p_expression_innerList(p):
+    '''innerList : innerList COMMA expression
+                 | expression'''
+    if len(p) == 2:
+        p[0] = [p[1]]
+    else:
+        p[0] = p[1] + [p[3]]
+
+def p_expression_indexing(p):
+    'expression : expression LBRACKET expression RBRACKET'
+    p[0] = p[1][p[3]]
 
 
 def p_expression_binop(p):
@@ -94,9 +125,6 @@ def p_expression_binop(p):
                   | expression AND expression
                   | expression OR expression'''
     if p[2] == '+':
-        if type(p[1]) == str and type(p[3]) == str:
-            p[1] = p[1][:-1]
-            p[3] = p[3][1:]
         p[0] = p[1] + p[3]
     elif p[2] == '-':
         p[0] = p[1] - p[3]
@@ -171,15 +199,11 @@ def p_expression_group(p):
     p[0] = p[2]
 
 
-def p_expression_number(p):
-    'expression : NUMBER'
+def p_expression_types(p):
+    '''expression : INTEGER
+                  | REAL
+                  | STRING'''
     p[0] = p[1]
-
-
-def p_expression_string(p):
-    'expression : STRING'
-    p[0] = p[1]
-    p[0] = "'" + p[0] + "'"
 
 
 import ply.yacc as yacc
