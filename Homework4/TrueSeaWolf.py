@@ -112,7 +112,10 @@ def p_expression_innerList(p):
 
 def p_expression_indexing(p):
     'expression : expression LBRACKET expression RBRACKET'
-    p[0] = p[1][p[3]]
+    if p[3] > len(p[1]):
+        p[0] = "SEMANTIC ERROR"
+    else:
+        p[0] = p[1][p[3]]
 
 
 def typesMatch(first, second):
@@ -139,6 +142,7 @@ def p_expression_operators(p):
                   | expression AND expression
                   | expression OR expression
                   | expression IN expression'''
+
     if p[2] == '+':
         if typesMatch(p[1], p[3]):
             p[0] = p[1] + p[3]
