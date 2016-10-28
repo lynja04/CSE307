@@ -75,9 +75,15 @@ import ply.lex as lex
 
 lex.lex()
 
-# Precedence rules for the arithmetic operators
 precedence = (
+    ('left', 'OR'),
+    ('left', 'AND'),
+    ('left', 'LESSTHAN', 'GREATERTHAN', 'LESSTHANEQUAL', 'GREATERTHANEQUAL', 'EQUALS', 'NOTEQUALS'),
+    ('left', 'IN'),
     ('left', 'PLUS', 'MINUS'),
+    ('left', 'FLOORDIVISION'),
+    ('left', 'EXPONENT'),
+    ('left', 'MODULUS'),
     ('left', 'TIMES', 'DIVIDE'),
     ('right', 'UMINUS'),
 )
@@ -103,12 +109,20 @@ def p_expression_innerList(p):
     else:
         p[0] = p[1] + [p[3]]
 
+
 def p_expression_indexing(p):
     'expression : expression LBRACKET expression RBRACKET'
     p[0] = p[1][p[3]]
 
 
-def p_expression_binop(p):
+def typesMatch(first, second):
+    if type(first) == type(second):
+        return True
+    else:
+        return False
+
+
+def p_expression_operators(p):
     '''expression : expression PLUS expression
                   | expression MINUS expression
                   | expression TIMES expression
@@ -123,15 +137,26 @@ def p_expression_binop(p):
                   | expression EQUALS expression
                   | expression NOTEQUALS expression
                   | expression AND expression
-                  | expression OR expression'''
+                  | expression OR expression
+                  | expression IN expression'''
     if p[2] == '+':
-        p[0] = p[1] + p[3]
+        if typesMatch(p[1], p[2]):
+            if type(p[1]) == chr:
+                str(p[1])
+            elif type(p[3]) == chr:
+                str(p[3])
+            p[0] = p[1] + p[3]
+        else:
+            p[0] = "SEMANTIC ERROR"
     elif p[2] == '-':
         p[0] = p[1] - p[3]
     elif p[2] == '*':
         p[0] = p[1] * p[3]
     elif p[2] == '/':
-        p[0] = p[1] / p[3]
+        if p[3] == 0:
+            p[0] = "SEMANTIC ERROR"
+        else:
+            p[0] = p[1] / p[3]
     elif p[2] == '\\':
         p[0] = p[1] // p[3]
     elif p[2] == '%':
@@ -176,6 +201,8 @@ def p_expression_binop(p):
         if p[1] == "true":
             if p[3] == "true":
                 p[0] = "true"
+            elif type(p[3]) == int:
+                p[0] = "true"
             else:
                 p[0] = "false"
         else:
@@ -185,6 +212,13 @@ def p_expression_binop(p):
             p[0] = "true"
         elif p[3] == "true":
             p[0] = "true"
+        elif type(p[3]) == int or type(p[1]) == int:
+            p[0] = "true"
+        else:
+            p[0] = "false"
+    elif p[2] == 'in':
+        if p[1] in p[3]:
+            p[0] = "true"
         else:
             p[0] = "false"
 
@@ -192,6 +226,14 @@ def p_expression_binop(p):
 def p_expression_uminus(p):
     'expression : MINUS expression %prec UMINUS'
     p[0] = -p[2]
+
+
+def p_expression_not(p):
+    'expression : NOT expression'
+    if p[2] == 0:
+        p[0] = "true"
+    else:
+        p[0] = "false"
 
 
 def p_expression_group(p):
@@ -205,6 +247,9 @@ def p_expression_types(p):
                   | STRING'''
     p[0] = p[1]
 
+
+def p_error(p):
+    pass
 
 import ply.yacc as yacc
 import sys
