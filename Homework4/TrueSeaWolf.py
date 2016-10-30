@@ -7,7 +7,7 @@
 # ------------------------- #
 
 tokens = (
-    'INTEGER', 'REAL', 'STRING', 'LBRACKET', 'RBRACKET', 'COMMA',
+    'REAL', 'INTEGER', 'STRING', 'LBRACKET', 'RBRACKET', 'COMMA',
     'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'EQUALS', 'NOTEQUALS', 'MODULUS', 'EXPONENT', 'FLOORDIVISION',
     'GREATERTHAN', 'LESSTHAN', 'LPAREN', 'RPAREN', 'GREATERTHANEQUAL', 'LESSTHANEQUAL',
     'AND', 'OR', 'IN', 'NOT'
@@ -38,15 +38,15 @@ t_RBRACKET = r'\]'
 t_COMMA = ","
 
 
-def t_INTEGER(t):
-    r'\d+'
-    t.value = int(t.value)
+def t_REAL(t):
+    r'\d*\.\d*'
+    t.value = float(t.value)
     return t
 
 
-def t_REAL(t):
-    r'-?\d*(\d\.|\.\d)\d*'
-    t.value = float(t.value)
+def t_INTEGER(t):
+    r'\d+'
+    t.value = int(t.value)
     return t
 
 
@@ -96,6 +96,14 @@ def p_statement_expr(p):
     print(p[1])
 
 
+def p_expression_indexing(p):
+    'index_expression : expression LBRACKET expression RBRACKET'
+    if p[3] > len(p[1]):
+        p[0] = "SEMANTIC ERROR"
+    else:
+        p[0] = p[1][p[3]]
+
+
 def p_expression_listExpression(p):
     'expression : LBRACKET innerList RBRACKET'
     p[0] = p[2]
@@ -110,16 +118,12 @@ def p_expression_innerList(p):
         p[0] = p[1] + [p[3]]
 
 
-def p_expression_indexing(p):
-    'expression : expression LBRACKET expression RBRACKET'
-    if p[3] > len(p[1]):
-        p[0] = "SEMANTIC ERROR"
-    else:
-        p[0] = p[1][p[3]]
-
-
 def typesMatch(first, second):
     if type(first) == type(second):
+        return True
+    elif type(first) == int and type(second) == float:
+        return True
+    elif type(first) == float and type(second) == int:
         return True
     else:
         return False
@@ -198,10 +202,10 @@ def p_expression_operators(p):
         else:
             p[0] = "true"
     elif p[2] == 'and':
-        if p[1] == "true":
+        if p[1] == "true" or p[1] > 0:
             if p[3] == "true":
                 p[0] = "true"
-            elif type(p[3]) == int:
+            elif p[3] > 0:
                 p[0] = "true"
             else:
                 p[0] = "false"
@@ -212,7 +216,7 @@ def p_expression_operators(p):
             p[0] = "true"
         elif p[3] == "true":
             p[0] = "true"
-        elif type(p[3]) == int or type(p[1]) == int:
+        elif p[3] > 0 or p[1] > 0:
             p[0] = "true"
         else:
             p[0] = "false"
@@ -244,7 +248,8 @@ def p_expression_group(p):
 def p_expression_types(p):
     '''expression : INTEGER
                   | REAL
-                  | STRING'''
+                  | STRING
+                  | index_expression'''
     p[0] = p[1]
 
 
