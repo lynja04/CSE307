@@ -96,28 +96,6 @@ def p_statement_expr(p):
     print(p[1])
 
 
-def p_expression_indexing(p):
-    'index_expression : expression LBRACKET expression RBRACKET'
-    if p[3] > len(p[1]):
-        p[0] = "SEMANTIC ERROR"
-    else:
-        p[0] = p[1][p[3]]
-
-
-def p_expression_listExpression(p):
-    'expression : LBRACKET innerList RBRACKET'
-    p[0] = p[2]
-
-
-def p_expression_innerList(p):
-    '''innerList : innerList COMMA expression
-                 | expression'''
-    if len(p) == 2:
-        p[0] = [p[1]]
-    else:
-        p[0] = p[1] + [p[3]]
-
-
 def typesMatch(first, second):
     if type(first) == type(second):
         return True
@@ -249,8 +227,40 @@ def p_expression_types(p):
     '''expression : INTEGER
                   | REAL
                   | STRING
-                  | index_expression'''
+                  | LIST
+                  | INDEXED_STRING
+                  | INDEXED_LIST'''
     p[0] = p[1]
+
+
+def p_expression_listExpression(p):
+    'LIST : LBRACKET innerList RBRACKET'
+    p[0] = p[2]
+
+
+def p_expression_innerList(p):
+    '''innerList : innerList COMMA expression
+                 | expression'''
+    if len(p) == 2:
+        p[0] = [p[1]]
+    else:
+        p[0] = p[1] + [p[3]]
+
+
+def p_expression_indexed_string(p):
+    'INDEXED_STRING : STRING LBRACKET expression RBRACKET'
+    if p[3] > len(p[1]):
+        p[0] = "SEMANTIC ERROR"
+    else:
+        p[0] = p[1][p[3]]
+
+
+def p_expression_indexed_list(p):
+    'INDEXED_LIST : LIST LBRACKET expression RBRACKET'
+    if p[3] > len(p[1]):
+        p[0] = "SEMANTIC ERROR"
+    else:
+        p[0] = p[1][p[3]]
 
 
 def p_error(p):
@@ -258,13 +268,7 @@ def p_error(p):
 
 import ply.yacc as yacc
 import sys
-
 yacc.yacc()
-
-while True:
-    try:
-        s = input("> ")
-    except EOFError:
-        break
-    yacc.parse(s)
-
+r = open(sys.argv[1], "r")
+for line in r:
+    yacc.parse(line)
