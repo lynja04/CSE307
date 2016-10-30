@@ -147,62 +147,62 @@ def p_expression_operators(p):
         p[0] = p[1] ** p[3]
     elif p[2] == '<':
         if p[1] < p[3]:
-            p[0] = "true"
+            p[0] = 1
         else:
-            p[0] = "false"
+            p[0] = 0
     elif p[2] == '>':
         if p[1] > p[3]:
-            p[0] = "true"
+            p[0] = 1
         else:
-            p[0] = "false"
+            p[0] = 0
     elif p[2] == '<=':
         if p[1] < p[3]:
-            p[0] = "true"
+            p[0] = 1
         elif p[1] == p[3]:
-            p[0] = "true"
+            p[0] = 1
         else:
-            p[0] = "false"
+            p[0] = 0
     elif p[2] == '>=':
         if p[1] > p[3]:
-            p[0] = "true"
+            p[0] = 1
         elif p[1] == p[3]:
-            p[0] = "true"
+            p[0] = 1
         else:
-            p[0] = "false"
+            p[0] = 0
     elif p[2] == '==':
         if p[1] == p[3]:
-            p[0] = "true"
+            p[0] = 1
         else:
-            p[0] = "false"
+            p[0] = 0
     elif p[2] == '<>':
         if p[1] == p[3]:
-            p[0] = "false"
+            p[0] = 0
         else:
             p[0] = "true"
     elif p[2] == 'and':
-        if p[1] == "true" or p[1] > 0:
-            if p[3] == "true":
-                p[0] = "true"
+        if p[1] == 1 or p[1] > 0:
+            if p[3] == 1:
+                p[0] = 1
             elif p[3] > 0:
-                p[0] = "true"
+                p[0] = 1
             else:
-                p[0] = "false"
+                p[0] = 0
         else:
-            p[0] = "false"
+            p[0] = 0
     elif p[2] == 'or':
-        if p[1] == "true":
-            p[0] = "true"
-        elif p[3] == "true":
-            p[0] = "true"
+        if p[1] == 1:
+            p[0] = 1
+        elif p[3] == 1:
+            p[0] = 1
         elif p[3] > 0 or p[1] > 0:
-            p[0] = "true"
+            p[0] = 1
         else:
-            p[0] = "false"
+            p[0] = 0
     elif p[2] == 'in':
         if p[1] in p[3]:
-            p[0] = "true"
+            p[0] = 1
         else:
-            p[0] = "false"
+            p[0] = 0
 
 
 def p_expression_uminus(p):
