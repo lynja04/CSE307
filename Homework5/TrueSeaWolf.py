@@ -13,12 +13,12 @@ reserved = {
     'while': 'WHILE'
 }
 
-tokens = (
+tokens = [
     'REAL', 'INTEGER', 'STRING', 'LBRACKET', 'RBRACKET', 'COMMA',
     'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'EQUALS', 'NOTEQUALS', 'MODULUS', 'EXPONENT', 'FLOORDIVISION',
     'GREATERTHAN', 'LESSTHAN', 'LPAREN', 'RPAREN', 'GREATERTHANEQUAL', 'LESSTHANEQUAL',
     'AND', 'OR', 'IN', 'NOT', 'NAME', 'SEMI', 'LBRACE', 'RBRACE',
-)
+] + list(reserved.values())
 
 # Tokens
 t_PLUS = r'\+'
@@ -184,6 +184,14 @@ class BinaryExpression:
                     return 0
 
 
+class ExpressionType:
+    def __init__(self, value):
+        self.value = value
+
+    def evaluate(self):
+        self.value.evaluate()
+
+
 class Statement:
     pass
 
@@ -223,7 +231,20 @@ class IfStatement(Statement):
 
     def execute(self):
         if self.expression.evaluate():
-            self.block.execute()
+            self.blockStatement.execute()
+
+
+class IfElseStatement(Statement):
+    def __init__(self, expression, blockStatement, elseBlockStatement):
+        self.expression = expression
+        self.blockStatement = blockStatement
+        self.elseBlockStatement = elseBlockStatement
+
+    def execute(self):
+        if self.expression.evaluate():
+            self.blockStatement.execute()
+        else:
+            self.elseBlockStatement.execute()
 
 
 class WhileStatement:
@@ -233,7 +254,7 @@ class WhileStatement:
 
     def execute(self):
         while self.expression.evaluate():
-            self.block.execute()
+            self.blockStatement.execute()
 
 
 precedence = (
@@ -252,11 +273,9 @@ precedence = (
 names = {}
 
 
-def p_statement_expr(p):
-    'statement : expression'
-    if type(p[1]) == str:
-        p[1] = "'" + p[1] + "'"
-    print(p[1])
+def p_application(p):
+    'application : statement'
+    p[1].execute()
 
 
 def p_statement_list(p):
@@ -272,6 +291,7 @@ def p_statement_types(p):
     '''statement : print_statement
                  | assignment_statement
                  | if_statement
+                 | if_else_statement
                  | while_statement
                  | block_statement'''
     p[0] = p[1]
@@ -290,6 +310,16 @@ def p_block_statement(p):
 def p_if_statement(p):
     'if_statement : IF expression block_statement'
     p[0] = IfStatement(p[2], p[3])
+
+
+def p_if_else_statement(p):
+    'if_else_statement : IF expression block_statement ELSE block_statement'
+    p[0] = IfElseStatement(p[2], p[3], p[5])
+
+
+def p_while_statement(p):
+    'while_statement : WHILE expression block_statement'
+    p[0] = WhileStatement(p[2], p[3])
 
 
 def p_assignment_statement(p):
@@ -326,84 +356,7 @@ def p_expression_operators(p):
                   | expression OR expression
                   | expression IN expression'''
 
-    if p[2] == '+':
-        if typesMatch(p[1], p[3]):
-            p[0] = p[1] + p[3]
-        else:
-            p[0] = "SEMANTIC ERROR"
-    elif p[2] == '-':
-        p[0] = p[1] - p[3]
-    elif p[2] == '*':
-        p[0] = p[1] * p[3]
-    elif p[2] == '/':
-        if p[3] == 0:
-            p[0] = "SEMANTIC ERROR"
-        else:
-            p[0] = p[1] / p[3]
-    elif p[2] == '\\':
-        p[0] = p[1] // p[3]
-    elif p[2] == '%':
-        p[0] = p[1] % p[3]
-    elif p[2] == '**':
-        p[0] = p[1] ** p[3]
-    elif p[2] == '<':
-        if p[1] < p[3]:
-            p[0] = 1
-        else:
-            p[0] = 0
-    elif p[2] == '>':
-        if p[1] > p[3]:
-            p[0] = 1
-        else:
-            p[0] = 0
-    elif p[2] == '<=':
-        if p[1] < p[3]:
-            p[0] = 1
-        elif p[1] == p[3]:
-            p[0] = 1
-        else:
-            p[0] = 0
-    elif p[2] == '>=':
-        if p[1] > p[3]:
-            p[0] = 1
-        elif p[1] == p[3]:
-            p[0] = 1
-        else:
-            p[0] = 0
-    elif p[2] == '==':
-        if p[1] == p[3]:
-            p[0] = 1
-        else:
-            p[0] = 0
-    elif p[2] == '<>':
-        if p[1] == p[3]:
-            p[0] = 0
-        else:
-            p[0] = "true"
-    elif p[2] == 'and':
-        if p[1] == 1 or p[1] > 0:
-            if p[3] == 1:
-                p[0] = 1
-            elif p[3] > 0:
-                p[0] = 1
-            else:
-                p[0] = 0
-        else:
-            p[0] = 0
-    elif p[2] == 'or':
-        if p[1] == 1:
-            p[0] = 1
-        elif p[3] == 1:
-            p[0] = 1
-        elif p[3] > 0 or p[1] > 0:
-            p[0] = 1
-        else:
-            p[0] = 0
-    elif p[2] == 'in':
-        if p[1] in p[3]:
-            p[0] = 1
-        else:
-            p[0] = 0
+    p[0] = BinaryExpression(p[1], p[2], p[3], p)
 
 
 def p_expression_uminus(p):
@@ -414,9 +367,9 @@ def p_expression_uminus(p):
 def p_expression_not(p):
     'expression : NOT expression'
     if p[2] == 0:
-        p[0] = "true"
+        p[0] = 1
     else:
-        p[0] = "false"
+        p[0] = 0
 
 
 def p_expression_group(p):
@@ -469,7 +422,13 @@ def p_error(p):
 
 import ply.yacc as yacc
 import sys
-yacc.yacc()
-r = open(sys.argv[1], "r")
-for line in r:
-    yacc.parse(line)
+parser = yacc.yacc()
+# r = open(sys.argv[1], "r")
+# for line in r:
+#     yacc.parse(line)
+while True:
+    try:
+        s = input('> ')
+    except EOFError:
+        break
+    parser.parse(s)
