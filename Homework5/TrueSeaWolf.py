@@ -6,11 +6,18 @@
 # An expression evaluator.  #
 # ------------------------- #
 
+reserved = {
+    'print': 'PRINT',
+    'if': 'IF',
+    'else': 'ELSE',
+    'while': 'WHILE'
+}
+
 tokens = (
     'REAL', 'INTEGER', 'STRING', 'LBRACKET', 'RBRACKET', 'COMMA',
     'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'EQUALS', 'NOTEQUALS', 'MODULUS', 'EXPONENT', 'FLOORDIVISION',
     'GREATERTHAN', 'LESSTHAN', 'LPAREN', 'RPAREN', 'GREATERTHANEQUAL', 'LESSTHANEQUAL',
-    'AND', 'OR', 'IN', 'NOT'
+    'AND', 'OR', 'IN', 'NOT', 'NAME', 'SEMI', 'LBRACE', 'RBRACE',
 )
 
 # Tokens
@@ -25,6 +32,8 @@ t_EQUALS = r'=='
 t_NOTEQUALS = r'<>'
 t_LPAREN = r'\('
 t_RPAREN = r'\)'
+t_LBRACE = r'\{'
+t_RBRACE = r'\}'
 t_GREATERTHAN = r'>'
 t_LESSTHAN = r'<'
 t_GREATERTHANEQUAL = r'>='
@@ -36,6 +45,8 @@ t_NOT = r'not'
 t_LBRACKET = r'\['
 t_RBRACKET = r'\]'
 t_COMMA = ","
+t_SEMI = ";"
+t_NAME = r'[a-zA-Z][a-zA-Z0-9_]*'
 
 
 def t_REAL(t):
@@ -54,7 +65,6 @@ def t_STRING(t):
     r'"([^\\"]*|\\.)*"'
     t.value = str(t.value[1:-1])
     return t
-
 
 # Ignored characters
 t_ignore = " \t"
@@ -75,6 +85,157 @@ import ply.lex as lex
 
 lex.lex()
 
+
+class Expression:
+    pass
+
+
+class BinaryExpression:
+    def __init__(self, leftNode, operator, rightNode, p):
+        self.leftNode = leftNode
+        self.operator = operator
+        self.rightNode = rightNode
+        self.p = p
+
+    def evaluate(self):
+        leftEvaluate = self.leftNode.evaluate()
+        rightEvaluate = self.rightNode.evaluate()
+        if self.operator == '+':
+            if typesMatch(leftEvaluate, rightEvaluate):
+                return leftEvaluate + rightEvaluate
+            elif self.operator == '-':
+                return leftEvaluate - rightEvaluate
+            elif self.operator == '*':
+                return leftEvaluate * rightEvaluate
+            elif self.operator == '/':
+                if rightEvaluate != 0:
+                    return leftEvaluate / rightEvaluate
+                else:
+                    return "SEMANTIC ERROR"
+            elif self.operator == '//':
+                if rightEvaluate != 0:
+                    return leftEvaluate // rightEvaluate
+                else:
+                    return "SEMANTIC ERROR"
+            elif self.operator == '%':
+                if rightEvaluate != 0:
+                    return leftEvaluate % rightEvaluate
+                else:
+                    return "SEMANTIC ERROR"
+            elif self.operator == '**':
+                return leftEvaluate ** rightEvaluate
+            elif self.operator == '==':
+                if leftEvaluate == rightEvaluate:
+                    return 1
+                else:
+                    return 0
+            elif self.operator == '<':
+                if leftEvaluate < rightEvaluate:
+                    return 1
+                else:
+                    return 0
+            elif self.operator == '>':
+                if leftEvaluate > rightEvaluate:
+                    return 1
+                else:
+                    return 0
+            elif self.operator == '<=':
+                if leftEvaluate < rightEvaluate:
+                    return 1
+                elif leftEvaluate == rightEvaluate:
+                    return 1
+                else:
+                    return 0
+            elif self.operator == '>=':
+                if leftEvaluate > rightEvaluate:
+                    return 1
+                elif leftEvaluate == rightEvaluate:
+                    return 1
+                else:
+                    return 0
+            elif self.operator == '<>':
+                if leftEvaluate != rightEvaluate:
+                    return 1
+                else:
+                    return 0
+            elif self.operator == 'and':
+                if leftEvaluate == 1 or leftEvaluate > 0:
+                    if rightEvaluate == 1:
+                        return 1
+                    elif rightEvaluate > 0:
+                        return 1
+                    else:
+                        return 0
+                else:
+                    return 0
+            elif self.operator == 'or':
+                if leftEvaluate == 1:
+                    return 1
+                elif rightEvaluate == 1:
+                    return 1
+                elif rightEvaluate > 0 or leftEvaluate > 0:
+                    return 1
+                else:
+                    return 0
+            elif self.operator == 'in':
+                if leftEvaluate in rightEvaluate:
+                    return 1
+                else:
+                    return 0
+
+
+class Statement:
+    pass
+
+
+class PrintStatement:
+    def __init__(self, expression):
+        self.expression = expression
+
+    def execute(self):
+        evaluated = self.expression.evaluate()
+        if evaluated != None:
+            print(evaluated)
+
+
+class BlockStatement(Statement):
+    def __init__(self, statementlist):
+        self.statementlist = statementlist
+
+    def execute(self):
+        for statement in self.statementlist:
+            statement.execute()
+
+
+class AssignmentStatement:
+    def __init__(self, name, expression):
+        self.name = name
+        self.expression = expression
+
+    def execute(self):
+        names[self.name] = self.expression.evaluate()
+
+
+class IfStatement(Statement):
+    def __init__(self, expression, blockStatement):
+        self.expression = expression
+        self.blockStatement = blockStatement
+
+    def execute(self):
+        if self.expression.evaluate():
+            self.block.execute()
+
+
+class WhileStatement:
+    def __init__(self, expression, blockStatement):
+        self.expression = expression
+        self.blockStatement = blockStatement
+
+    def execute(self):
+        while self.expression.evaluate():
+            self.block.execute()
+
+
 precedence = (
     ('left', 'OR'),
     ('left', 'AND'),
@@ -88,12 +249,52 @@ precedence = (
     ('right', 'UMINUS'),
 )
 
+names = {}
+
 
 def p_statement_expr(p):
     'statement : expression'
     if type(p[1]) == str:
         p[1] = "'" + p[1] + "'"
     print(p[1])
+
+
+def p_statement_list(p):
+    '''statement_list : statement_list statement
+                      | statement'''
+    if len(p) == 2:
+        p[0] = [p[1]]
+    else:
+        p[0] = p[1] + [p[2]]
+
+
+def p_statement_types(p):
+    '''statement : print_statement
+                 | assignment_statement
+                 | if_statement
+                 | while_statement
+                 | block_statement'''
+    p[0] = p[1]
+
+
+def p_print_statement(p):
+    'print_statement : PRINT LPAREN expression RPAREN SEMI'
+    p[0] = PrintStatement(p[3])
+
+
+def p_block_statement(p):
+    'block_statement : LBRACE statement_list RBRACE'
+    p[0] = BlockStatement(p[2])
+
+
+def p_if_statement(p):
+    'if_statement : IF expression block_statement'
+    p[0] = IfStatement(p[2], p[3])
+
+
+def p_assignment_statement(p):
+    'assignment_statement : NAME EQUALS expression SEMI'
+    p[0] = AssignmentStatement(p[1], p[3])
 
 
 def typesMatch(first, second):
