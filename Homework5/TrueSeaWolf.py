@@ -32,8 +32,8 @@ t_EQUALS = r'=='
 t_NOTEQUALS = r'<>'
 t_LPAREN = r'\('
 t_RPAREN = r'\)'
-t_LBRACE = r'\{'
-t_RBRACE = r'\}'
+t_LBRACE = r'{'
+t_RBRACE = r'}'
 t_GREATERTHAN = r'>'
 t_LESSTHAN = r'<'
 t_GREATERTHANEQUAL = r'>='
@@ -44,8 +44,8 @@ t_IN = r'in'
 t_NOT = r'not'
 t_LBRACKET = r'\['
 t_RBRACKET = r'\]'
-t_COMMA = ","
-t_SEMI = ";"
+t_COMMA = r','
+t_SEMI = r';'
 t_NAME = r'[a-zA-Z][a-zA-Z0-9_]*'
 
 
@@ -90,7 +90,7 @@ class Expression:
     pass
 
 
-class BinaryExpression:
+class BinaryExpression(Expression):
     def __init__(self, leftNode, operator, rightNode, p):
         self.leftNode = leftNode
         self.operator = operator
@@ -184,7 +184,17 @@ class BinaryExpression:
                     return 0
 
 
-class ExpressionType:
+class NameExpression(Expression):
+    def __init__(self, name, p):
+        self.name = name
+        self.p = p
+
+    def execute(self):
+        if self.name in names:
+            return names[self.name]
+
+
+class TypeExpression(Expression):
     def __init__(self, value):
         self.value = value
 
@@ -196,7 +206,7 @@ class Statement:
     pass
 
 
-class PrintStatement:
+class PrintStatement(Statement):
     def __init__(self, expression):
         self.expression = expression
 
@@ -215,7 +225,7 @@ class BlockStatement(Statement):
             statement.execute()
 
 
-class AssignmentStatement:
+class AssignmentStatement(Statement):
     def __init__(self, name, expression):
         self.name = name
         self.expression = expression
@@ -247,7 +257,7 @@ class IfElseStatement(Statement):
             self.elseBlockStatement.execute()
 
 
-class WhileStatement:
+class WhileStatement(Statement):
     def __init__(self, expression, blockStatement):
         self.expression = expression
         self.blockStatement = blockStatement
@@ -287,7 +297,12 @@ def p_statement_list(p):
         p[0] = p[1] + [p[2]]
 
 
-def p_statement_types(p):
+def p_block_statement(p):
+    'block_statement : LBRACE statement_list RBRACE'
+    p[0] = BlockStatement(p[2])
+
+
+def p_statement(p):
     '''statement : print_statement
                  | assignment_statement
                  | if_statement
@@ -300,11 +315,6 @@ def p_statement_types(p):
 def p_print_statement(p):
     'print_statement : PRINT LPAREN expression RPAREN SEMI'
     p[0] = PrintStatement(p[3])
-
-
-def p_block_statement(p):
-    'block_statement : LBRACE statement_list RBRACE'
-    p[0] = BlockStatement(p[2])
 
 
 def p_if_statement(p):
@@ -327,6 +337,11 @@ def p_assignment_statement(p):
     p[0] = AssignmentStatement(p[1], p[3])
 
 
+def p_expression_name(p):
+    'expression : NAME'
+    p[0] = NameExpression(p[1], p)
+
+
 def typesMatch(first, second):
     if type(first) == type(second):
         return True
@@ -339,7 +354,8 @@ def typesMatch(first, second):
 
 
 def p_expression_operators(p):
-    '''expression : expression PLUS expression
+    '''expression : LPAREN expression RPAREN
+                  | expression PLUS expression
                   | expression MINUS expression
                   | expression TIMES expression
                   | expression DIVIDE expression
@@ -356,7 +372,10 @@ def p_expression_operators(p):
                   | expression OR expression
                   | expression IN expression'''
 
-    p[0] = BinaryExpression(p[1], p[2], p[3], p)
+    if p[1] == '(' and p[3] == ')':
+        p[0] = p[2]
+    else:
+        p[0] = BinaryExpression(p[1], p[2], p[3], p)
 
 
 def p_expression_uminus(p):
@@ -372,11 +391,6 @@ def p_expression_not(p):
         p[0] = 0
 
 
-def p_expression_group(p):
-    'expression : LPAREN expression RPAREN'
-    p[0] = p[2]
-
-
 def p_expression_types(p):
     '''expression : INTEGER
                   | REAL
@@ -384,7 +398,8 @@ def p_expression_types(p):
                   | LIST
                   | INDEXED_STRING
                   | INDEXED_LIST'''
-    p[0] = p[1]
+
+    p[0] = TypeExpression(p[1])
 
 
 def p_expression_listExpression(p):
