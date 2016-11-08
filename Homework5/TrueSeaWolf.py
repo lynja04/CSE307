@@ -22,7 +22,7 @@ t_FLOORDIVISION = r'\\'
 t_MODULUS = r'%'
 t_EXPONENT = r'\*\*'
 t_EQUALS = r'=='
-t_EQUAL = r'='
+t_EQUAL = r'\='
 t_NOTEQUALS = r'<>'
 t_LPAREN = r'\('
 t_RPAREN = r'\)'
@@ -198,11 +198,10 @@ class BinaryExpression(Expression):
 
 
 class NameExpression(Expression):
-    def __init__(self, name, p):
+    def __init__(self, name):
         self.name = name
-        self.p = p
 
-    def execute(self):
+    def evaluate(self):
         if self.name in names:
             return names[self.name]
 
@@ -346,13 +345,13 @@ def p_while_statement(p):
 
 
 def p_assignment_statement(p):
-    'assignment_statement : NAME EQUALS expression SEMI'
+    'assignment_statement : NAME EQUAL expression SEMI'
     p[0] = AssignmentStatement(p[1], p[3])
 
 
 def p_expression_name(p):
     'expression : NAME'
-    p[0] = NameExpression(p[1], p)
+    p[0] = NameExpression(p[1])
 
 
 def typesMatch(first, second):
