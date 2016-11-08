@@ -6,19 +6,12 @@
 # An expression evaluator.  #
 # ------------------------- #
 
-reserved = {
-    'print': 'PRINT',
-    'if': 'IF',
-    'else': 'ELSE',
-    'while': 'WHILE'
-}
-
 tokens = [
     'REAL', 'INTEGER', 'STRING', 'LBRACKET', 'RBRACKET', 'COMMA',
     'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'EQUALS', 'NOTEQUALS', 'MODULUS', 'EXPONENT', 'FLOORDIVISION',
     'GREATERTHAN', 'LESSTHAN', 'LPAREN', 'RPAREN', 'GREATERTHANEQUAL', 'LESSTHANEQUAL',
-    'AND', 'OR', 'IN', 'NOT', 'NAME', 'SEMI', 'LBRACE', 'RBRACE',
-] + list(reserved.values())
+    'AND', 'OR', 'IN', 'NOT', 'NAME', 'SEMI', 'LBRACE', 'RBRACE', 'PRINT', 'IF', 'ELSE', 'WHILE', 'EQUAL'
+]
 
 # Tokens
 t_PLUS = r'\+'
@@ -29,6 +22,7 @@ t_FLOORDIVISION = r'\\'
 t_MODULUS = r'%'
 t_EXPONENT = r'\*\*'
 t_EQUALS = r'=='
+t_EQUAL = r'='
 t_NOTEQUALS = r'<>'
 t_LPAREN = r'\('
 t_RPAREN = r'\)'
@@ -58,6 +52,26 @@ def t_REAL(t):
 def t_INTEGER(t):
     r'\d+'
     t.value = int(t.value)
+    return t
+
+
+def t_PRINT(t):
+    r'print'
+    return t
+
+
+def t_IF(t):
+    r'if'
+    return t
+
+
+def t_ELSE(t):
+    r'else'
+    return t
+
+
+def t_WHILE(t):
+    r'while'
     return t
 
 
@@ -91,11 +105,10 @@ class Expression:
 
 
 class BinaryExpression(Expression):
-    def __init__(self, leftNode, operator, rightNode, p):
+    def __init__(self, leftNode, operator, rightNode):
         self.leftNode = leftNode
         self.operator = operator
         self.rightNode = rightNode
-        self.p = p
 
     def evaluate(self):
         leftEvaluate = self.leftNode.evaluate()
@@ -199,7 +212,7 @@ class TypeExpression(Expression):
         self.value = value
 
     def evaluate(self):
-        self.value.evaluate()
+        return self.value
 
 
 class Statement:
@@ -211,9 +224,8 @@ class PrintStatement(Statement):
         self.expression = expression
 
     def execute(self):
-        evaluated = self.expression.evaluate()
-        if evaluated != None:
-            print(evaluated)
+        evaluatedExpression = self.expression.evaluate()
+        print(evaluatedExpression)
 
 
 class BlockStatement(Statement):
@@ -279,6 +291,7 @@ precedence = (
     ('left', 'TIMES', 'DIVIDE'),
     ('right', 'UMINUS'),
 )
+
 
 names = {}
 
@@ -375,7 +388,7 @@ def p_expression_operators(p):
     if p[1] == '(' and p[3] == ')':
         p[0] = p[2]
     else:
-        p[0] = BinaryExpression(p[1], p[2], p[3], p)
+        p[0] = BinaryExpression(p[1], p[2], p[3])
 
 
 def p_expression_uminus(p):
@@ -411,9 +424,9 @@ def p_expression_innerList(p):
     '''innerList : innerList COMMA expression
                  | expression'''
     if len(p) == 2:
-        p[0] = [p[1]]
+        p[0] = [p[1].evaluate()]
     else:
-        p[0] = p[1] + [p[3]]
+        p[0] = p[1] + [p[3].evaluate()]
 
 
 def p_expression_indexed_string(p):
