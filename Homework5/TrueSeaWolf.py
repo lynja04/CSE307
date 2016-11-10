@@ -211,7 +211,22 @@ class TypeExpression(Expression):
         self.value = value
 
     def evaluate(self):
-        return self.value
+        if isinstance(self.value, Expression):
+            return self.value.evaluate()
+        else:
+            return self.value
+
+
+class IndexExpression(Expression):
+    def __init__(self, base, index):
+        self.base = base
+        self.index = index
+
+    def evaluate(self):
+        baseEvaluated = self.base.evaluate()
+        indexEvaluated = self.index.evaluate()
+        if indexEvaluated < len(baseEvaluated):
+            return baseEvaluated[indexEvaluated]
 
 
 class Statement:
@@ -407,16 +422,19 @@ def p_expression_types(p):
     '''expression : INTEGER
                   | REAL
                   | STRING
-                  | LIST
-                  | INDEXED_STRING
-                  | INDEXED_LIST'''
+                  | list_expression'''
 
     p[0] = TypeExpression(p[1])
 
 
+def p_expression_index(p):
+    'expression : index_expression'
+    p[0] = p[1]
+
+
 def p_expression_listExpression(p):
-    'LIST : LBRACKET innerList RBRACKET'
-    p[0] = p[2]
+    'list_expression : LBRACKET innerList RBRACKET'
+    p[0] = TypeExpression(p[2])
 
 
 def p_expression_innerList(p):
@@ -427,21 +445,25 @@ def p_expression_innerList(p):
     else:
         p[0] = p[1] + [p[3].evaluate()]
 
+def p_expression_indexExpression(p):
+    'index_expression : expression LBRACKET expression RBRACKET'
+    p[0] = IndexExpression(p[1], p[3])
 
-def p_expression_indexed_string(p):
-    'INDEXED_STRING : STRING LBRACKET expression RBRACKET'
-    if p[3] > len(p[1]):
-        p[0] = "SEMANTIC ERROR"
-    else:
-        p[0] = p[1][p[3]]
-
-
-def p_expression_indexed_list(p):
-    'INDEXED_LIST : LIST LBRACKET expression RBRACKET'
-    if p[3] > len(p[1]):
-        p[0] = "SEMANTIC ERROR"
-    else:
-        p[0] = p[1][p[3]]
+#
+# def p_expression_indexed_string(p):
+#     'INDEXED_STRING : STRING LBRACKET expression RBRACKET'
+#     if p[3] > len(p[1]):
+#         p[0] = "SEMANTIC ERROR"
+#     else:
+#         p[0] = IndexExpression(p[1], [p[3]])
+#
+#
+# def p_expression_indexed_list(p):
+#     'INDEXED_LIST : LIST LBRACKET expression RBRACKET'
+#     if p[3] > len(p[1]):
+#         p[0] = "SEMANTIC ERROR"
+#     else:
+#         p[0] = IndexExpression(p[1], p[3])
 
 
 def p_error(p):
