@@ -1,0 +1,1550 @@
+Created by PLY version 3.9 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    LIST
+
+Grammar
+
+Rule 0     S' -> statement
+Rule 1     statement -> expression
+Rule 2     expression -> expression PLUS expression
+Rule 3     expression -> expression MINUS expression
+Rule 4     expression -> expression TIMES expression
+Rule 5     expression -> expression DIVIDE expression
+Rule 6     expression -> expression FLOORDIVISION expression
+Rule 7     expression -> expression MODULUS expression
+Rule 8     expression -> expression EXPONENT expression
+Rule 9     expression -> expression GREATERTHAN expression
+Rule 10    expression -> expression LESSTHAN expression
+Rule 11    expression -> expression GREATERTHANEQUAL expression
+Rule 12    expression -> expression LESSTHANEQUAL expression
+Rule 13    expression -> expression EQUALS expression
+Rule 14    expression -> expression NOTEQUALS expression
+Rule 15    expression -> MINUS expression
+Rule 16    expression -> LPAREN expression RPAREN
+Rule 17    expression -> NUMBER
+Rule 18    expression -> STRING
+
+Terminals, with rules where they appear
+
+DIVIDE               : 5
+EQUALS               : 13
+EXPONENT             : 8
+FLOORDIVISION        : 6
+GREATERTHAN          : 9
+GREATERTHANEQUAL     : 11
+LESSTHAN             : 10
+LESSTHANEQUAL        : 12
+LIST                 : 
+LPAREN               : 16
+MINUS                : 3 15
+MODULUS              : 7
+NOTEQUALS            : 14
+NUMBER               : 17
+PLUS                 : 2
+RPAREN               : 16
+STRING               : 18
+TIMES                : 4
+error                : 
+
+Nonterminals, with rules where they appear
+
+expression           : 1 2 2 3 3 4 4 5 5 6 6 7 7 8 8 9 9 10 10 11 11 12 12 13 13 14 14 15 16
+statement            : 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . statement
+    (1) statement -> . expression
+    (2) expression -> . expression PLUS expression
+    (3) expression -> . expression MINUS expression
+    (4) expression -> . expression TIMES expression
+    (5) expression -> . expression DIVIDE expression
+    (6) expression -> . expression FLOORDIVISION expression
+    (7) expression -> . expression MODULUS expression
+    (8) expression -> . expression EXPONENT expression
+    (9) expression -> . expression GREATERTHAN expression
+    (10) expression -> . expression LESSTHAN expression
+    (11) expression -> . expression GREATERTHANEQUAL expression
+    (12) expression -> . expression LESSTHANEQUAL expression
+    (13) expression -> . expression EQUALS expression
+    (14) expression -> . expression NOTEQUALS expression
+    (15) expression -> . MINUS expression
+    (16) expression -> . LPAREN expression RPAREN
+    (17) expression -> . NUMBER
+    (18) expression -> . STRING
+
+    MINUS           shift and go to state 6
+    LPAREN          shift and go to state 1
+    NUMBER          shift and go to state 5
+    STRING          shift and go to state 3
+
+    expression                     shift and go to state 2
+    statement                      shift and go to state 4
+
+state 1
+
+    (16) expression -> LPAREN . expression RPAREN
+    (2) expression -> . expression PLUS expression
+    (3) expression -> . expression MINUS expression
+    (4) expression -> . expression TIMES expression
+    (5) expression -> . expression DIVIDE expression
+    (6) expression -> . expression FLOORDIVISION expression
+    (7) expression -> . expression MODULUS expression
+    (8) expression -> . expression EXPONENT expression
+    (9) expression -> . expression GREATERTHAN expression
+    (10) expression -> . expression LESSTHAN expression
+    (11) expression -> . expression GREATERTHANEQUAL expression
+    (12) expression -> . expression LESSTHANEQUAL expression
+    (13) expression -> . expression EQUALS expression
+    (14) expression -> . expression NOTEQUALS expression
+    (15) expression -> . MINUS expression
+    (16) expression -> . LPAREN expression RPAREN
+    (17) expression -> . NUMBER
+    (18) expression -> . STRING
+
+    MINUS           shift and go to state 6
+    LPAREN          shift and go to state 1
+    NUMBER          shift and go to state 5
+    STRING          shift and go to state 3
+
+    expression                     shift and go to state 7
+
+state 2
+
+    (1) statement -> expression .
+    (2) expression -> expression . PLUS expression
+    (3) expression -> expression . MINUS expression
+    (4) expression -> expression . TIMES expression
+    (5) expression -> expression . DIVIDE expression
+    (6) expression -> expression . FLOORDIVISION expression
+    (7) expression -> expression . MODULUS expression
+    (8) expression -> expression . EXPONENT expression
+    (9) expression -> expression . GREATERTHAN expression
+    (10) expression -> expression . LESSTHAN expression
+    (11) expression -> expression . GREATERTHANEQUAL expression
+    (12) expression -> expression . LESSTHANEQUAL expression
+    (13) expression -> expression . EQUALS expression
+    (14) expression -> expression . NOTEQUALS expression
+
+    $end            reduce using rule 1 (statement -> expression .)
+    PLUS            shift and go to state 9
+    MINUS           shift and go to state 19
+    TIMES           shift and go to state 17
+    DIVIDE          shift and go to state 13
+    FLOORDIVISION   shift and go to state 14
+    MODULUS         shift and go to state 8
+    EXPONENT        shift and go to state 15
+    GREATERTHAN     shift and go to state 16
+    LESSTHAN        shift and go to state 12
+    GREATERTHANEQUAL shift and go to state 20
+    LESSTHANEQUAL   shift and go to state 18
+    EQUALS          shift and go to state 11
+    NOTEQUALS       shift and go to state 10
+
+
+state 3
+
+    (18) expression -> STRING .
+
+    PLUS            reduce using rule 18 (expression -> STRING .)
+    MINUS           reduce using rule 18 (expression -> STRING .)
+    TIMES           reduce using rule 18 (expression -> STRING .)
+    DIVIDE          reduce using rule 18 (expression -> STRING .)
+    FLOORDIVISION   reduce using rule 18 (expression -> STRING .)
+    MODULUS         reduce using rule 18 (expression -> STRING .)
+    EXPONENT        reduce using rule 18 (expression -> STRING .)
+    GREATERTHAN     reduce using rule 18 (expression -> STRING .)
+    LESSTHAN        reduce using rule 18 (expression -> STRING .)
+    GREATERTHANEQUAL reduce using rule 18 (expression -> STRING .)
+    LESSTHANEQUAL   reduce using rule 18 (expression -> STRING .)
+    EQUALS          reduce using rule 18 (expression -> STRING .)
+    NOTEQUALS       reduce using rule 18 (expression -> STRING .)
+    $end            reduce using rule 18 (expression -> STRING .)
+    RPAREN          reduce using rule 18 (expression -> STRING .)
+
+
+state 4
+
+    (0) S' -> statement .
+
+
+
+state 5
+
+    (17) expression -> NUMBER .
+
+    PLUS            reduce using rule 17 (expression -> NUMBER .)
+    MINUS           reduce using rule 17 (expression -> NUMBER .)
+    TIMES           reduce using rule 17 (expression -> NUMBER .)
+    DIVIDE          reduce using rule 17 (expression -> NUMBER .)
+    FLOORDIVISION   reduce using rule 17 (expression -> NUMBER .)
+    MODULUS         reduce using rule 17 (expression -> NUMBER .)
+    EXPONENT        reduce using rule 17 (expression -> NUMBER .)
+    GREATERTHAN     reduce using rule 17 (expression -> NUMBER .)
+    LESSTHAN        reduce using rule 17 (expression -> NUMBER .)
+    GREATERTHANEQUAL reduce using rule 17 (expression -> NUMBER .)
+    LESSTHANEQUAL   reduce using rule 17 (expression -> NUMBER .)
+    EQUALS          reduce using rule 17 (expression -> NUMBER .)
+    NOTEQUALS       reduce using rule 17 (expression -> NUMBER .)
+    $end            reduce using rule 17 (expression -> NUMBER .)
+    RPAREN          reduce using rule 17 (expression -> NUMBER .)
+
+
+state 6
+
+    (15) expression -> MINUS . expression
+    (2) expression -> . expression PLUS expression
+    (3) expression -> . expression MINUS expression
+    (4) expression -> . expression TIMES expression
+    (5) expression -> . expression DIVIDE expression
+    (6) expression -> . expression FLOORDIVISION expression
+    (7) expression -> . expression MODULUS expression
+    (8) expression -> . expression EXPONENT expression
+    (9) expression -> . expression GREATERTHAN expression
+    (10) expression -> . expression LESSTHAN expression
+    (11) expression -> . expression GREATERTHANEQUAL expression
+    (12) expression -> . expression LESSTHANEQUAL expression
+    (13) expression -> . expression EQUALS expression
+    (14) expression -> . expression NOTEQUALS expression
+    (15) expression -> . MINUS expression
+    (16) expression -> . LPAREN expression RPAREN
+    (17) expression -> . NUMBER
+    (18) expression -> . STRING
+
+    MINUS           shift and go to state 6
+    LPAREN          shift and go to state 1
+    NUMBER          shift and go to state 5
+    STRING          shift and go to state 3
+
+    expression                     shift and go to state 21
+
+state 7
+
+    (16) expression -> LPAREN expression . RPAREN
+    (2) expression -> expression . PLUS expression
+    (3) expression -> expression . MINUS expression
+    (4) expression -> expression . TIMES expression
+    (5) expression -> expression . DIVIDE expression
+    (6) expression -> expression . FLOORDIVISION expression
+    (7) expression -> expression . MODULUS expression
+    (8) expression -> expression . EXPONENT expression
+    (9) expression -> expression . GREATERTHAN expression
+    (10) expression -> expression . LESSTHAN expression
+    (11) expression -> expression . GREATERTHANEQUAL expression
+    (12) expression -> expression . LESSTHANEQUAL expression
+    (13) expression -> expression . EQUALS expression
+    (14) expression -> expression . NOTEQUALS expression
+
+    RPAREN          shift and go to state 22
+    PLUS            shift and go to state 9
+    MINUS           shift and go to state 19
+    TIMES           shift and go to state 17
+    DIVIDE          shift and go to state 13
+    FLOORDIVISION   shift and go to state 14
+    MODULUS         shift and go to state 8
+    EXPONENT        shift and go to state 15
+    GREATERTHAN     shift and go to state 16
+    LESSTHAN        shift and go to state 12
+    GREATERTHANEQUAL shift and go to state 20
+    LESSTHANEQUAL   shift and go to state 18
+    EQUALS          shift and go to state 11
+    NOTEQUALS       shift and go to state 10
+
+
+state 8
+
+    (7) expression -> expression MODULUS . expression
+    (2) expression -> . expression PLUS expression
+    (3) expression -> . expression MINUS expression
+    (4) expression -> . expression TIMES expression
+    (5) expression -> . expression DIVIDE expression
+    (6) expression -> . expression FLOORDIVISION expression
+    (7) expression -> . expression MODULUS expression
+    (8) expression -> . expression EXPONENT expression
+    (9) expression -> . expression GREATERTHAN expression
+    (10) expression -> . expression LESSTHAN expression
+    (11) expression -> . expression GREATERTHANEQUAL expression
+    (12) expression -> . expression LESSTHANEQUAL expression
+    (13) expression -> . expression EQUALS expression
+    (14) expression -> . expression NOTEQUALS expression
+    (15) expression -> . MINUS expression
+    (16) expression -> . LPAREN expression RPAREN
+    (17) expression -> . NUMBER
+    (18) expression -> . STRING
+
+    MINUS           shift and go to state 6
+    LPAREN          shift and go to state 1
+    NUMBER          shift and go to state 5
+    STRING          shift and go to state 3
+
+    expression                     shift and go to state 23
+
+state 9
+
+    (2) expression -> expression PLUS . expression
+    (2) expression -> . expression PLUS expression
+    (3) expression -> . expression MINUS expression
+    (4) expression -> . expression TIMES expression
+    (5) expression -> . expression DIVIDE expression
+    (6) expression -> . expression FLOORDIVISION expression
+    (7) expression -> . expression MODULUS expression
+    (8) expression -> . expression EXPONENT expression
+    (9) expression -> . expression GREATERTHAN expression
+    (10) expression -> . expression LESSTHAN expression
+    (11) expression -> . expression GREATERTHANEQUAL expression
+    (12) expression -> . expression LESSTHANEQUAL expression
+    (13) expression -> . expression EQUALS expression
+    (14) expression -> . expression NOTEQUALS expression
+    (15) expression -> . MINUS expression
+    (16) expression -> . LPAREN expression RPAREN
+    (17) expression -> . NUMBER
+    (18) expression -> . STRING
+
+    MINUS           shift and go to state 6
+    LPAREN          shift and go to state 1
+    NUMBER          shift and go to state 5
+    STRING          shift and go to state 3
+
+    expression                     shift and go to state 24
+
+state 10
+
+    (14) expression -> expression NOTEQUALS . expression
+    (2) expression -> . expression PLUS expression
+    (3) expression -> . expression MINUS expression
+    (4) expression -> . expression TIMES expression
+    (5) expression -> . expression DIVIDE expression
+    (6) expression -> . expression FLOORDIVISION expression
+    (7) expression -> . expression MODULUS expression
+    (8) expression -> . expression EXPONENT expression
+    (9) expression -> . expression GREATERTHAN expression
+    (10) expression -> . expression LESSTHAN expression
+    (11) expression -> . expression GREATERTHANEQUAL expression
+    (12) expression -> . expression LESSTHANEQUAL expression
+    (13) expression -> . expression EQUALS expression
+    (14) expression -> . expression NOTEQUALS expression
+    (15) expression -> . MINUS expression
+    (16) expression -> . LPAREN expression RPAREN
+    (17) expression -> . NUMBER
+    (18) expression -> . STRING
+
+    MINUS           shift and go to state 6
+    LPAREN          shift and go to state 1
+    NUMBER          shift and go to state 5
+    STRING          shift and go to state 3
+
+    expression                     shift and go to state 25
+
+state 11
+
+    (13) expression -> expression EQUALS . expression
+    (2) expression -> . expression PLUS expression
+    (3) expression -> . expression MINUS expression
+    (4) expression -> . expression TIMES expression
+    (5) expression -> . expression DIVIDE expression
+    (6) expression -> . expression FLOORDIVISION expression
+    (7) expression -> . expression MODULUS expression
+    (8) expression -> . expression EXPONENT expression
+    (9) expression -> . expression GREATERTHAN expression
+    (10) expression -> . expression LESSTHAN expression
+    (11) expression -> . expression GREATERTHANEQUAL expression
+    (12) expression -> . expression LESSTHANEQUAL expression
+    (13) expression -> . expression EQUALS expression
+    (14) expression -> . expression NOTEQUALS expression
+    (15) expression -> . MINUS expression
+    (16) expression -> . LPAREN expression RPAREN
+    (17) expression -> . NUMBER
+    (18) expression -> . STRING
+
+    MINUS           shift and go to state 6
+    LPAREN          shift and go to state 1
+    NUMBER          shift and go to state 5
+    STRING          shift and go to state 3
+
+    expression                     shift and go to state 26
+
+state 12
+
+    (10) expression -> expression LESSTHAN . expression
+    (2) expression -> . expression PLUS expression
+    (3) expression -> . expression MINUS expression
+    (4) expression -> . expression TIMES expression
+    (5) expression -> . expression DIVIDE expression
+    (6) expression -> . expression FLOORDIVISION expression
+    (7) expression -> . expression MODULUS expression
+    (8) expression -> . expression EXPONENT expression
+    (9) expression -> . expression GREATERTHAN expression
+    (10) expression -> . expression LESSTHAN expression
+    (11) expression -> . expression GREATERTHANEQUAL expression
+    (12) expression -> . expression LESSTHANEQUAL expression
+    (13) expression -> . expression EQUALS expression
+    (14) expression -> . expression NOTEQUALS expression
+    (15) expression -> . MINUS expression
+    (16) expression -> . LPAREN expression RPAREN
+    (17) expression -> . NUMBER
+    (18) expression -> . STRING
+
+    MINUS           shift and go to state 6
+    LPAREN          shift and go to state 1
+    NUMBER          shift and go to state 5
+    STRING          shift and go to state 3
+
+    expression                     shift and go to state 27
+
+state 13
+
+    (5) expression -> expression DIVIDE . expression
+    (2) expression -> . expression PLUS expression
+    (3) expression -> . expression MINUS expression
+    (4) expression -> . expression TIMES expression
+    (5) expression -> . expression DIVIDE expression
+    (6) expression -> . expression FLOORDIVISION expression
+    (7) expression -> . expression MODULUS expression
+    (8) expression -> . expression EXPONENT expression
+    (9) expression -> . expression GREATERTHAN expression
+    (10) expression -> . expression LESSTHAN expression
+    (11) expression -> . expression GREATERTHANEQUAL expression
+    (12) expression -> . expression LESSTHANEQUAL expression
+    (13) expression -> . expression EQUALS expression
+    (14) expression -> . expression NOTEQUALS expression
+    (15) expression -> . MINUS expression
+    (16) expression -> . LPAREN expression RPAREN
+    (17) expression -> . NUMBER
+    (18) expression -> . STRING
+
+    MINUS           shift and go to state 6
+    LPAREN          shift and go to state 1
+    NUMBER          shift and go to state 5
+    STRING          shift and go to state 3
+
+    expression                     shift and go to state 28
+
+state 14
+
+    (6) expression -> expression FLOORDIVISION . expression
+    (2) expression -> . expression PLUS expression
+    (3) expression -> . expression MINUS expression
+    (4) expression -> . expression TIMES expression
+    (5) expression -> . expression DIVIDE expression
+    (6) expression -> . expression FLOORDIVISION expression
+    (7) expression -> . expression MODULUS expression
+    (8) expression -> . expression EXPONENT expression
+    (9) expression -> . expression GREATERTHAN expression
+    (10) expression -> . expression LESSTHAN expression
+    (11) expression -> . expression GREATERTHANEQUAL expression
+    (12) expression -> . expression LESSTHANEQUAL expression
+    (13) expression -> . expression EQUALS expression
+    (14) expression -> . expression NOTEQUALS expression
+    (15) expression -> . MINUS expression
+    (16) expression -> . LPAREN expression RPAREN
+    (17) expression -> . NUMBER
+    (18) expression -> . STRING
+
+    MINUS           shift and go to state 6
+    LPAREN          shift and go to state 1
+    NUMBER          shift and go to state 5
+    STRING          shift and go to state 3
+
+    expression                     shift and go to state 29
+
+state 15
+
+    (8) expression -> expression EXPONENT . expression
+    (2) expression -> . expression PLUS expression
+    (3) expression -> . expression MINUS expression
+    (4) expression -> . expression TIMES expression
+    (5) expression -> . expression DIVIDE expression
+    (6) expression -> . expression FLOORDIVISION expression
+    (7) expression -> . expression MODULUS expression
+    (8) expression -> . expression EXPONENT expression
+    (9) expression -> . expression GREATERTHAN expression
+    (10) expression -> . expression LESSTHAN expression
+    (11) expression -> . expression GREATERTHANEQUAL expression
+    (12) expression -> . expression LESSTHANEQUAL expression
+    (13) expression -> . expression EQUALS expression
+    (14) expression -> . expression NOTEQUALS expression
+    (15) expression -> . MINUS expression
+    (16) expression -> . LPAREN expression RPAREN
+    (17) expression -> . NUMBER
+    (18) expression -> . STRING
+
+    MINUS           shift and go to state 6
+    LPAREN          shift and go to state 1
+    NUMBER          shift and go to state 5
+    STRING          shift and go to state 3
+
+    expression                     shift and go to state 30
+
+state 16
+
+    (9) expression -> expression GREATERTHAN . expression
+    (2) expression -> . expression PLUS expression
+    (3) expression -> . expression MINUS expression
+    (4) expression -> . expression TIMES expression
+    (5) expression -> . expression DIVIDE expression
+    (6) expression -> . expression FLOORDIVISION expression
+    (7) expression -> . expression MODULUS expression
+    (8) expression -> . expression EXPONENT expression
+    (9) expression -> . expression GREATERTHAN expression
+    (10) expression -> . expression LESSTHAN expression
+    (11) expression -> . expression GREATERTHANEQUAL expression
+    (12) expression -> . expression LESSTHANEQUAL expression
+    (13) expression -> . expression EQUALS expression
+    (14) expression -> . expression NOTEQUALS expression
+    (15) expression -> . MINUS expression
+    (16) expression -> . LPAREN expression RPAREN
+    (17) expression -> . NUMBER
+    (18) expression -> . STRING
+
+    MINUS           shift and go to state 6
+    LPAREN          shift and go to state 1
+    NUMBER          shift and go to state 5
+    STRING          shift and go to state 3
+
+    expression                     shift and go to state 31
+
+state 17
+
+    (4) expression -> expression TIMES . expression
+    (2) expression -> . expression PLUS expression
+    (3) expression -> . expression MINUS expression
+    (4) expression -> . expression TIMES expression
+    (5) expression -> . expression DIVIDE expression
+    (6) expression -> . expression FLOORDIVISION expression
+    (7) expression -> . expression MODULUS expression
+    (8) expression -> . expression EXPONENT expression
+    (9) expression -> . expression GREATERTHAN expression
+    (10) expression -> . expression LESSTHAN expression
+    (11) expression -> . expression GREATERTHANEQUAL expression
+    (12) expression -> . expression LESSTHANEQUAL expression
+    (13) expression -> . expression EQUALS expression
+    (14) expression -> . expression NOTEQUALS expression
+    (15) expression -> . MINUS expression
+    (16) expression -> . LPAREN expression RPAREN
+    (17) expression -> . NUMBER
+    (18) expression -> . STRING
+
+    MINUS           shift and go to state 6
+    LPAREN          shift and go to state 1
+    NUMBER          shift and go to state 5
+    STRING          shift and go to state 3
+
+    expression                     shift and go to state 32
+
+state 18
+
+    (12) expression -> expression LESSTHANEQUAL . expression
+    (2) expression -> . expression PLUS expression
+    (3) expression -> . expression MINUS expression
+    (4) expression -> . expression TIMES expression
+    (5) expression -> . expression DIVIDE expression
+    (6) expression -> . expression FLOORDIVISION expression
+    (7) expression -> . expression MODULUS expression
+    (8) expression -> . expression EXPONENT expression
+    (9) expression -> . expression GREATERTHAN expression
+    (10) expression -> . expression LESSTHAN expression
+    (11) expression -> . expression GREATERTHANEQUAL expression
+    (12) expression -> . expression LESSTHANEQUAL expression
+    (13) expression -> . expression EQUALS expression
+    (14) expression -> . expression NOTEQUALS expression
+    (15) expression -> . MINUS expression
+    (16) expression -> . LPAREN expression RPAREN
+    (17) expression -> . NUMBER
+    (18) expression -> . STRING
+
+    MINUS           shift and go to state 6
+    LPAREN          shift and go to state 1
+    NUMBER          shift and go to state 5
+    STRING          shift and go to state 3
+
+    expression                     shift and go to state 33
+
+state 19
+
+    (3) expression -> expression MINUS . expression
+    (2) expression -> . expression PLUS expression
+    (3) expression -> . expression MINUS expression
+    (4) expression -> . expression TIMES expression
+    (5) expression -> . expression DIVIDE expression
+    (6) expression -> . expression FLOORDIVISION expression
+    (7) expression -> . expression MODULUS expression
+    (8) expression -> . expression EXPONENT expression
+    (9) expression -> . expression GREATERTHAN expression
+    (10) expression -> . expression LESSTHAN expression
+    (11) expression -> . expression GREATERTHANEQUAL expression
+    (12) expression -> . expression LESSTHANEQUAL expression
+    (13) expression -> . expression EQUALS expression
+    (14) expression -> . expression NOTEQUALS expression
+    (15) expression -> . MINUS expression
+    (16) expression -> . LPAREN expression RPAREN
+    (17) expression -> . NUMBER
+    (18) expression -> . STRING
+
+    MINUS           shift and go to state 6
+    LPAREN          shift and go to state 1
+    NUMBER          shift and go to state 5
+    STRING          shift and go to state 3
+
+    expression                     shift and go to state 34
+
+state 20
+
+    (11) expression -> expression GREATERTHANEQUAL . expression
+    (2) expression -> . expression PLUS expression
+    (3) expression -> . expression MINUS expression
+    (4) expression -> . expression TIMES expression
+    (5) expression -> . expression DIVIDE expression
+    (6) expression -> . expression FLOORDIVISION expression
+    (7) expression -> . expression MODULUS expression
+    (8) expression -> . expression EXPONENT expression
+    (9) expression -> . expression GREATERTHAN expression
+    (10) expression -> . expression LESSTHAN expression
+    (11) expression -> . expression GREATERTHANEQUAL expression
+    (12) expression -> . expression LESSTHANEQUAL expression
+    (13) expression -> . expression EQUALS expression
+    (14) expression -> . expression NOTEQUALS expression
+    (15) expression -> . MINUS expression
+    (16) expression -> . LPAREN expression RPAREN
+    (17) expression -> . NUMBER
+    (18) expression -> . STRING
+
+    MINUS           shift and go to state 6
+    LPAREN          shift and go to state 1
+    NUMBER          shift and go to state 5
+    STRING          shift and go to state 3
+
+    expression                     shift and go to state 35
+
+state 21
+
+    (15) expression -> MINUS expression .
+    (2) expression -> expression . PLUS expression
+    (3) expression -> expression . MINUS expression
+    (4) expression -> expression . TIMES expression
+    (5) expression -> expression . DIVIDE expression
+    (6) expression -> expression . FLOORDIVISION expression
+    (7) expression -> expression . MODULUS expression
+    (8) expression -> expression . EXPONENT expression
+    (9) expression -> expression . GREATERTHAN expression
+    (10) expression -> expression . LESSTHAN expression
+    (11) expression -> expression . GREATERTHANEQUAL expression
+    (12) expression -> expression . LESSTHANEQUAL expression
+    (13) expression -> expression . EQUALS expression
+    (14) expression -> expression . NOTEQUALS expression
+
+    PLUS            reduce using rule 15 (expression -> MINUS expression .)
+    MINUS           reduce using rule 15 (expression -> MINUS expression .)
+    TIMES           reduce using rule 15 (expression -> MINUS expression .)
+    DIVIDE          reduce using rule 15 (expression -> MINUS expression .)
+    FLOORDIVISION   reduce using rule 15 (expression -> MINUS expression .)
+    MODULUS         reduce using rule 15 (expression -> MINUS expression .)
+    EXPONENT        reduce using rule 15 (expression -> MINUS expression .)
+    GREATERTHAN     reduce using rule 15 (expression -> MINUS expression .)
+    LESSTHAN        reduce using rule 15 (expression -> MINUS expression .)
+    GREATERTHANEQUAL reduce using rule 15 (expression -> MINUS expression .)
+    LESSTHANEQUAL   reduce using rule 15 (expression -> MINUS expression .)
+    EQUALS          reduce using rule 15 (expression -> MINUS expression .)
+    NOTEQUALS       reduce using rule 15 (expression -> MINUS expression .)
+    $end            reduce using rule 15 (expression -> MINUS expression .)
+    RPAREN          reduce using rule 15 (expression -> MINUS expression .)
+
+  ! PLUS            [ shift and go to state 9 ]
+  ! MINUS           [ shift and go to state 19 ]
+  ! TIMES           [ shift and go to state 17 ]
+  ! DIVIDE          [ shift and go to state 13 ]
+  ! FLOORDIVISION   [ shift and go to state 14 ]
+  ! MODULUS         [ shift and go to state 8 ]
+  ! EXPONENT        [ shift and go to state 15 ]
+  ! GREATERTHAN     [ shift and go to state 16 ]
+  ! LESSTHAN        [ shift and go to state 12 ]
+  ! GREATERTHANEQUAL [ shift and go to state 20 ]
+  ! LESSTHANEQUAL   [ shift and go to state 18 ]
+  ! EQUALS          [ shift and go to state 11 ]
+  ! NOTEQUALS       [ shift and go to state 10 ]
+
+
+state 22
+
+    (16) expression -> LPAREN expression RPAREN .
+
+    PLUS            reduce using rule 16 (expression -> LPAREN expression RPAREN .)
+    MINUS           reduce using rule 16 (expression -> LPAREN expression RPAREN .)
+    TIMES           reduce using rule 16 (expression -> LPAREN expression RPAREN .)
+    DIVIDE          reduce using rule 16 (expression -> LPAREN expression RPAREN .)
+    FLOORDIVISION   reduce using rule 16 (expression -> LPAREN expression RPAREN .)
+    MODULUS         reduce using rule 16 (expression -> LPAREN expression RPAREN .)
+    EXPONENT        reduce using rule 16 (expression -> LPAREN expression RPAREN .)
+    GREATERTHAN     reduce using rule 16 (expression -> LPAREN expression RPAREN .)
+    LESSTHAN        reduce using rule 16 (expression -> LPAREN expression RPAREN .)
+    GREATERTHANEQUAL reduce using rule 16 (expression -> LPAREN expression RPAREN .)
+    LESSTHANEQUAL   reduce using rule 16 (expression -> LPAREN expression RPAREN .)
+    EQUALS          reduce using rule 16 (expression -> LPAREN expression RPAREN .)
+    NOTEQUALS       reduce using rule 16 (expression -> LPAREN expression RPAREN .)
+    $end            reduce using rule 16 (expression -> LPAREN expression RPAREN .)
+    RPAREN          reduce using rule 16 (expression -> LPAREN expression RPAREN .)
+
+
+state 23
+
+    (7) expression -> expression MODULUS expression .
+    (2) expression -> expression . PLUS expression
+    (3) expression -> expression . MINUS expression
+    (4) expression -> expression . TIMES expression
+    (5) expression -> expression . DIVIDE expression
+    (6) expression -> expression . FLOORDIVISION expression
+    (7) expression -> expression . MODULUS expression
+    (8) expression -> expression . EXPONENT expression
+    (9) expression -> expression . GREATERTHAN expression
+    (10) expression -> expression . LESSTHAN expression
+    (11) expression -> expression . GREATERTHANEQUAL expression
+    (12) expression -> expression . LESSTHANEQUAL expression
+    (13) expression -> expression . EQUALS expression
+    (14) expression -> expression . NOTEQUALS expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for FLOORDIVISION resolved as shift
+  ! shift/reduce conflict for MODULUS resolved as shift
+  ! shift/reduce conflict for EXPONENT resolved as shift
+  ! shift/reduce conflict for GREATERTHAN resolved as shift
+  ! shift/reduce conflict for LESSTHAN resolved as shift
+  ! shift/reduce conflict for GREATERTHANEQUAL resolved as shift
+  ! shift/reduce conflict for LESSTHANEQUAL resolved as shift
+  ! shift/reduce conflict for EQUALS resolved as shift
+  ! shift/reduce conflict for NOTEQUALS resolved as shift
+    $end            reduce using rule 7 (expression -> expression MODULUS expression .)
+    RPAREN          reduce using rule 7 (expression -> expression MODULUS expression .)
+    PLUS            shift and go to state 9
+    MINUS           shift and go to state 19
+    TIMES           shift and go to state 17
+    DIVIDE          shift and go to state 13
+    FLOORDIVISION   shift and go to state 14
+    MODULUS         shift and go to state 8
+    EXPONENT        shift and go to state 15
+    GREATERTHAN     shift and go to state 16
+    LESSTHAN        shift and go to state 12
+    GREATERTHANEQUAL shift and go to state 20
+    LESSTHANEQUAL   shift and go to state 18
+    EQUALS          shift and go to state 11
+    NOTEQUALS       shift and go to state 10
+
+  ! PLUS            [ reduce using rule 7 (expression -> expression MODULUS expression .) ]
+  ! MINUS           [ reduce using rule 7 (expression -> expression MODULUS expression .) ]
+  ! TIMES           [ reduce using rule 7 (expression -> expression MODULUS expression .) ]
+  ! DIVIDE          [ reduce using rule 7 (expression -> expression MODULUS expression .) ]
+  ! FLOORDIVISION   [ reduce using rule 7 (expression -> expression MODULUS expression .) ]
+  ! MODULUS         [ reduce using rule 7 (expression -> expression MODULUS expression .) ]
+  ! EXPONENT        [ reduce using rule 7 (expression -> expression MODULUS expression .) ]
+  ! GREATERTHAN     [ reduce using rule 7 (expression -> expression MODULUS expression .) ]
+  ! LESSTHAN        [ reduce using rule 7 (expression -> expression MODULUS expression .) ]
+  ! GREATERTHANEQUAL [ reduce using rule 7 (expression -> expression MODULUS expression .) ]
+  ! LESSTHANEQUAL   [ reduce using rule 7 (expression -> expression MODULUS expression .) ]
+  ! EQUALS          [ reduce using rule 7 (expression -> expression MODULUS expression .) ]
+  ! NOTEQUALS       [ reduce using rule 7 (expression -> expression MODULUS expression .) ]
+
+
+state 24
+
+    (2) expression -> expression PLUS expression .
+    (2) expression -> expression . PLUS expression
+    (3) expression -> expression . MINUS expression
+    (4) expression -> expression . TIMES expression
+    (5) expression -> expression . DIVIDE expression
+    (6) expression -> expression . FLOORDIVISION expression
+    (7) expression -> expression . MODULUS expression
+    (8) expression -> expression . EXPONENT expression
+    (9) expression -> expression . GREATERTHAN expression
+    (10) expression -> expression . LESSTHAN expression
+    (11) expression -> expression . GREATERTHANEQUAL expression
+    (12) expression -> expression . LESSTHANEQUAL expression
+    (13) expression -> expression . EQUALS expression
+    (14) expression -> expression . NOTEQUALS expression
+
+    PLUS            reduce using rule 2 (expression -> expression PLUS expression .)
+    MINUS           reduce using rule 2 (expression -> expression PLUS expression .)
+    FLOORDIVISION   reduce using rule 2 (expression -> expression PLUS expression .)
+    MODULUS         reduce using rule 2 (expression -> expression PLUS expression .)
+    EXPONENT        reduce using rule 2 (expression -> expression PLUS expression .)
+    GREATERTHAN     reduce using rule 2 (expression -> expression PLUS expression .)
+    LESSTHAN        reduce using rule 2 (expression -> expression PLUS expression .)
+    GREATERTHANEQUAL reduce using rule 2 (expression -> expression PLUS expression .)
+    LESSTHANEQUAL   reduce using rule 2 (expression -> expression PLUS expression .)
+    EQUALS          reduce using rule 2 (expression -> expression PLUS expression .)
+    NOTEQUALS       reduce using rule 2 (expression -> expression PLUS expression .)
+    $end            reduce using rule 2 (expression -> expression PLUS expression .)
+    RPAREN          reduce using rule 2 (expression -> expression PLUS expression .)
+    TIMES           shift and go to state 17
+    DIVIDE          shift and go to state 13
+
+  ! TIMES           [ reduce using rule 2 (expression -> expression PLUS expression .) ]
+  ! DIVIDE          [ reduce using rule 2 (expression -> expression PLUS expression .) ]
+  ! PLUS            [ shift and go to state 9 ]
+  ! MINUS           [ shift and go to state 19 ]
+  ! FLOORDIVISION   [ shift and go to state 14 ]
+  ! MODULUS         [ shift and go to state 8 ]
+  ! EXPONENT        [ shift and go to state 15 ]
+  ! GREATERTHAN     [ shift and go to state 16 ]
+  ! LESSTHAN        [ shift and go to state 12 ]
+  ! GREATERTHANEQUAL [ shift and go to state 20 ]
+  ! LESSTHANEQUAL   [ shift and go to state 18 ]
+  ! EQUALS          [ shift and go to state 11 ]
+  ! NOTEQUALS       [ shift and go to state 10 ]
+
+
+state 25
+
+    (14) expression -> expression NOTEQUALS expression .
+    (2) expression -> expression . PLUS expression
+    (3) expression -> expression . MINUS expression
+    (4) expression -> expression . TIMES expression
+    (5) expression -> expression . DIVIDE expression
+    (6) expression -> expression . FLOORDIVISION expression
+    (7) expression -> expression . MODULUS expression
+    (8) expression -> expression . EXPONENT expression
+    (9) expression -> expression . GREATERTHAN expression
+    (10) expression -> expression . LESSTHAN expression
+    (11) expression -> expression . GREATERTHANEQUAL expression
+    (12) expression -> expression . LESSTHANEQUAL expression
+    (13) expression -> expression . EQUALS expression
+    (14) expression -> expression . NOTEQUALS expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for FLOORDIVISION resolved as shift
+  ! shift/reduce conflict for MODULUS resolved as shift
+  ! shift/reduce conflict for EXPONENT resolved as shift
+  ! shift/reduce conflict for GREATERTHAN resolved as shift
+  ! shift/reduce conflict for LESSTHAN resolved as shift
+  ! shift/reduce conflict for GREATERTHANEQUAL resolved as shift
+  ! shift/reduce conflict for LESSTHANEQUAL resolved as shift
+  ! shift/reduce conflict for EQUALS resolved as shift
+  ! shift/reduce conflict for NOTEQUALS resolved as shift
+    $end            reduce using rule 14 (expression -> expression NOTEQUALS expression .)
+    RPAREN          reduce using rule 14 (expression -> expression NOTEQUALS expression .)
+    PLUS            shift and go to state 9
+    MINUS           shift and go to state 19
+    TIMES           shift and go to state 17
+    DIVIDE          shift and go to state 13
+    FLOORDIVISION   shift and go to state 14
+    MODULUS         shift and go to state 8
+    EXPONENT        shift and go to state 15
+    GREATERTHAN     shift and go to state 16
+    LESSTHAN        shift and go to state 12
+    GREATERTHANEQUAL shift and go to state 20
+    LESSTHANEQUAL   shift and go to state 18
+    EQUALS          shift and go to state 11
+    NOTEQUALS       shift and go to state 10
+
+  ! PLUS            [ reduce using rule 14 (expression -> expression NOTEQUALS expression .) ]
+  ! MINUS           [ reduce using rule 14 (expression -> expression NOTEQUALS expression .) ]
+  ! TIMES           [ reduce using rule 14 (expression -> expression NOTEQUALS expression .) ]
+  ! DIVIDE          [ reduce using rule 14 (expression -> expression NOTEQUALS expression .) ]
+  ! FLOORDIVISION   [ reduce using rule 14 (expression -> expression NOTEQUALS expression .) ]
+  ! MODULUS         [ reduce using rule 14 (expression -> expression NOTEQUALS expression .) ]
+  ! EXPONENT        [ reduce using rule 14 (expression -> expression NOTEQUALS expression .) ]
+  ! GREATERTHAN     [ reduce using rule 14 (expression -> expression NOTEQUALS expression .) ]
+  ! LESSTHAN        [ reduce using rule 14 (expression -> expression NOTEQUALS expression .) ]
+  ! GREATERTHANEQUAL [ reduce using rule 14 (expression -> expression NOTEQUALS expression .) ]
+  ! LESSTHANEQUAL   [ reduce using rule 14 (expression -> expression NOTEQUALS expression .) ]
+  ! EQUALS          [ reduce using rule 14 (expression -> expression NOTEQUALS expression .) ]
+  ! NOTEQUALS       [ reduce using rule 14 (expression -> expression NOTEQUALS expression .) ]
+
+
+state 26
+
+    (13) expression -> expression EQUALS expression .
+    (2) expression -> expression . PLUS expression
+    (3) expression -> expression . MINUS expression
+    (4) expression -> expression . TIMES expression
+    (5) expression -> expression . DIVIDE expression
+    (6) expression -> expression . FLOORDIVISION expression
+    (7) expression -> expression . MODULUS expression
+    (8) expression -> expression . EXPONENT expression
+    (9) expression -> expression . GREATERTHAN expression
+    (10) expression -> expression . LESSTHAN expression
+    (11) expression -> expression . GREATERTHANEQUAL expression
+    (12) expression -> expression . LESSTHANEQUAL expression
+    (13) expression -> expression . EQUALS expression
+    (14) expression -> expression . NOTEQUALS expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for FLOORDIVISION resolved as shift
+  ! shift/reduce conflict for MODULUS resolved as shift
+  ! shift/reduce conflict for EXPONENT resolved as shift
+  ! shift/reduce conflict for GREATERTHAN resolved as shift
+  ! shift/reduce conflict for LESSTHAN resolved as shift
+  ! shift/reduce conflict for GREATERTHANEQUAL resolved as shift
+  ! shift/reduce conflict for LESSTHANEQUAL resolved as shift
+  ! shift/reduce conflict for EQUALS resolved as shift
+  ! shift/reduce conflict for NOTEQUALS resolved as shift
+    $end            reduce using rule 13 (expression -> expression EQUALS expression .)
+    RPAREN          reduce using rule 13 (expression -> expression EQUALS expression .)
+    PLUS            shift and go to state 9
+    MINUS           shift and go to state 19
+    TIMES           shift and go to state 17
+    DIVIDE          shift and go to state 13
+    FLOORDIVISION   shift and go to state 14
+    MODULUS         shift and go to state 8
+    EXPONENT        shift and go to state 15
+    GREATERTHAN     shift and go to state 16
+    LESSTHAN        shift and go to state 12
+    GREATERTHANEQUAL shift and go to state 20
+    LESSTHANEQUAL   shift and go to state 18
+    EQUALS          shift and go to state 11
+    NOTEQUALS       shift and go to state 10
+
+  ! PLUS            [ reduce using rule 13 (expression -> expression EQUALS expression .) ]
+  ! MINUS           [ reduce using rule 13 (expression -> expression EQUALS expression .) ]
+  ! TIMES           [ reduce using rule 13 (expression -> expression EQUALS expression .) ]
+  ! DIVIDE          [ reduce using rule 13 (expression -> expression EQUALS expression .) ]
+  ! FLOORDIVISION   [ reduce using rule 13 (expression -> expression EQUALS expression .) ]
+  ! MODULUS         [ reduce using rule 13 (expression -> expression EQUALS expression .) ]
+  ! EXPONENT        [ reduce using rule 13 (expression -> expression EQUALS expression .) ]
+  ! GREATERTHAN     [ reduce using rule 13 (expression -> expression EQUALS expression .) ]
+  ! LESSTHAN        [ reduce using rule 13 (expression -> expression EQUALS expression .) ]
+  ! GREATERTHANEQUAL [ reduce using rule 13 (expression -> expression EQUALS expression .) ]
+  ! LESSTHANEQUAL   [ reduce using rule 13 (expression -> expression EQUALS expression .) ]
+  ! EQUALS          [ reduce using rule 13 (expression -> expression EQUALS expression .) ]
+  ! NOTEQUALS       [ reduce using rule 13 (expression -> expression EQUALS expression .) ]
+
+
+state 27
+
+    (10) expression -> expression LESSTHAN expression .
+    (2) expression -> expression . PLUS expression
+    (3) expression -> expression . MINUS expression
+    (4) expression -> expression . TIMES expression
+    (5) expression -> expression . DIVIDE expression
+    (6) expression -> expression . FLOORDIVISION expression
+    (7) expression -> expression . MODULUS expression
+    (8) expression -> expression . EXPONENT expression
+    (9) expression -> expression . GREATERTHAN expression
+    (10) expression -> expression . LESSTHAN expression
+    (11) expression -> expression . GREATERTHANEQUAL expression
+    (12) expression -> expression . LESSTHANEQUAL expression
+    (13) expression -> expression . EQUALS expression
+    (14) expression -> expression . NOTEQUALS expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for FLOORDIVISION resolved as shift
+  ! shift/reduce conflict for MODULUS resolved as shift
+  ! shift/reduce conflict for EXPONENT resolved as shift
+  ! shift/reduce conflict for GREATERTHAN resolved as shift
+  ! shift/reduce conflict for LESSTHAN resolved as shift
+  ! shift/reduce conflict for GREATERTHANEQUAL resolved as shift
+  ! shift/reduce conflict for LESSTHANEQUAL resolved as shift
+  ! shift/reduce conflict for EQUALS resolved as shift
+  ! shift/reduce conflict for NOTEQUALS resolved as shift
+    $end            reduce using rule 10 (expression -> expression LESSTHAN expression .)
+    RPAREN          reduce using rule 10 (expression -> expression LESSTHAN expression .)
+    PLUS            shift and go to state 9
+    MINUS           shift and go to state 19
+    TIMES           shift and go to state 17
+    DIVIDE          shift and go to state 13
+    FLOORDIVISION   shift and go to state 14
+    MODULUS         shift and go to state 8
+    EXPONENT        shift and go to state 15
+    GREATERTHAN     shift and go to state 16
+    LESSTHAN        shift and go to state 12
+    GREATERTHANEQUAL shift and go to state 20
+    LESSTHANEQUAL   shift and go to state 18
+    EQUALS          shift and go to state 11
+    NOTEQUALS       shift and go to state 10
+
+  ! PLUS            [ reduce using rule 10 (expression -> expression LESSTHAN expression .) ]
+  ! MINUS           [ reduce using rule 10 (expression -> expression LESSTHAN expression .) ]
+  ! TIMES           [ reduce using rule 10 (expression -> expression LESSTHAN expression .) ]
+  ! DIVIDE          [ reduce using rule 10 (expression -> expression LESSTHAN expression .) ]
+  ! FLOORDIVISION   [ reduce using rule 10 (expression -> expression LESSTHAN expression .) ]
+  ! MODULUS         [ reduce using rule 10 (expression -> expression LESSTHAN expression .) ]
+  ! EXPONENT        [ reduce using rule 10 (expression -> expression LESSTHAN expression .) ]
+  ! GREATERTHAN     [ reduce using rule 10 (expression -> expression LESSTHAN expression .) ]
+  ! LESSTHAN        [ reduce using rule 10 (expression -> expression LESSTHAN expression .) ]
+  ! GREATERTHANEQUAL [ reduce using rule 10 (expression -> expression LESSTHAN expression .) ]
+  ! LESSTHANEQUAL   [ reduce using rule 10 (expression -> expression LESSTHAN expression .) ]
+  ! EQUALS          [ reduce using rule 10 (expression -> expression LESSTHAN expression .) ]
+  ! NOTEQUALS       [ reduce using rule 10 (expression -> expression LESSTHAN expression .) ]
+
+
+state 28
+
+    (5) expression -> expression DIVIDE expression .
+    (2) expression -> expression . PLUS expression
+    (3) expression -> expression . MINUS expression
+    (4) expression -> expression . TIMES expression
+    (5) expression -> expression . DIVIDE expression
+    (6) expression -> expression . FLOORDIVISION expression
+    (7) expression -> expression . MODULUS expression
+    (8) expression -> expression . EXPONENT expression
+    (9) expression -> expression . GREATERTHAN expression
+    (10) expression -> expression . LESSTHAN expression
+    (11) expression -> expression . GREATERTHANEQUAL expression
+    (12) expression -> expression . LESSTHANEQUAL expression
+    (13) expression -> expression . EQUALS expression
+    (14) expression -> expression . NOTEQUALS expression
+
+    PLUS            reduce using rule 5 (expression -> expression DIVIDE expression .)
+    MINUS           reduce using rule 5 (expression -> expression DIVIDE expression .)
+    TIMES           reduce using rule 5 (expression -> expression DIVIDE expression .)
+    DIVIDE          reduce using rule 5 (expression -> expression DIVIDE expression .)
+    FLOORDIVISION   reduce using rule 5 (expression -> expression DIVIDE expression .)
+    MODULUS         reduce using rule 5 (expression -> expression DIVIDE expression .)
+    EXPONENT        reduce using rule 5 (expression -> expression DIVIDE expression .)
+    GREATERTHAN     reduce using rule 5 (expression -> expression DIVIDE expression .)
+    LESSTHAN        reduce using rule 5 (expression -> expression DIVIDE expression .)
+    GREATERTHANEQUAL reduce using rule 5 (expression -> expression DIVIDE expression .)
+    LESSTHANEQUAL   reduce using rule 5 (expression -> expression DIVIDE expression .)
+    EQUALS          reduce using rule 5 (expression -> expression DIVIDE expression .)
+    NOTEQUALS       reduce using rule 5 (expression -> expression DIVIDE expression .)
+    $end            reduce using rule 5 (expression -> expression DIVIDE expression .)
+    RPAREN          reduce using rule 5 (expression -> expression DIVIDE expression .)
+
+  ! PLUS            [ shift and go to state 9 ]
+  ! MINUS           [ shift and go to state 19 ]
+  ! TIMES           [ shift and go to state 17 ]
+  ! DIVIDE          [ shift and go to state 13 ]
+  ! FLOORDIVISION   [ shift and go to state 14 ]
+  ! MODULUS         [ shift and go to state 8 ]
+  ! EXPONENT        [ shift and go to state 15 ]
+  ! GREATERTHAN     [ shift and go to state 16 ]
+  ! LESSTHAN        [ shift and go to state 12 ]
+  ! GREATERTHANEQUAL [ shift and go to state 20 ]
+  ! LESSTHANEQUAL   [ shift and go to state 18 ]
+  ! EQUALS          [ shift and go to state 11 ]
+  ! NOTEQUALS       [ shift and go to state 10 ]
+
+
+state 29
+
+    (6) expression -> expression FLOORDIVISION expression .
+    (2) expression -> expression . PLUS expression
+    (3) expression -> expression . MINUS expression
+    (4) expression -> expression . TIMES expression
+    (5) expression -> expression . DIVIDE expression
+    (6) expression -> expression . FLOORDIVISION expression
+    (7) expression -> expression . MODULUS expression
+    (8) expression -> expression . EXPONENT expression
+    (9) expression -> expression . GREATERTHAN expression
+    (10) expression -> expression . LESSTHAN expression
+    (11) expression -> expression . GREATERTHANEQUAL expression
+    (12) expression -> expression . LESSTHANEQUAL expression
+    (13) expression -> expression . EQUALS expression
+    (14) expression -> expression . NOTEQUALS expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for FLOORDIVISION resolved as shift
+  ! shift/reduce conflict for MODULUS resolved as shift
+  ! shift/reduce conflict for EXPONENT resolved as shift
+  ! shift/reduce conflict for GREATERTHAN resolved as shift
+  ! shift/reduce conflict for LESSTHAN resolved as shift
+  ! shift/reduce conflict for GREATERTHANEQUAL resolved as shift
+  ! shift/reduce conflict for LESSTHANEQUAL resolved as shift
+  ! shift/reduce conflict for EQUALS resolved as shift
+  ! shift/reduce conflict for NOTEQUALS resolved as shift
+    $end            reduce using rule 6 (expression -> expression FLOORDIVISION expression .)
+    RPAREN          reduce using rule 6 (expression -> expression FLOORDIVISION expression .)
+    PLUS            shift and go to state 9
+    MINUS           shift and go to state 19
+    TIMES           shift and go to state 17
+    DIVIDE          shift and go to state 13
+    FLOORDIVISION   shift and go to state 14
+    MODULUS         shift and go to state 8
+    EXPONENT        shift and go to state 15
+    GREATERTHAN     shift and go to state 16
+    LESSTHAN        shift and go to state 12
+    GREATERTHANEQUAL shift and go to state 20
+    LESSTHANEQUAL   shift and go to state 18
+    EQUALS          shift and go to state 11
+    NOTEQUALS       shift and go to state 10
+
+  ! PLUS            [ reduce using rule 6 (expression -> expression FLOORDIVISION expression .) ]
+  ! MINUS           [ reduce using rule 6 (expression -> expression FLOORDIVISION expression .) ]
+  ! TIMES           [ reduce using rule 6 (expression -> expression FLOORDIVISION expression .) ]
+  ! DIVIDE          [ reduce using rule 6 (expression -> expression FLOORDIVISION expression .) ]
+  ! FLOORDIVISION   [ reduce using rule 6 (expression -> expression FLOORDIVISION expression .) ]
+  ! MODULUS         [ reduce using rule 6 (expression -> expression FLOORDIVISION expression .) ]
+  ! EXPONENT        [ reduce using rule 6 (expression -> expression FLOORDIVISION expression .) ]
+  ! GREATERTHAN     [ reduce using rule 6 (expression -> expression FLOORDIVISION expression .) ]
+  ! LESSTHAN        [ reduce using rule 6 (expression -> expression FLOORDIVISION expression .) ]
+  ! GREATERTHANEQUAL [ reduce using rule 6 (expression -> expression FLOORDIVISION expression .) ]
+  ! LESSTHANEQUAL   [ reduce using rule 6 (expression -> expression FLOORDIVISION expression .) ]
+  ! EQUALS          [ reduce using rule 6 (expression -> expression FLOORDIVISION expression .) ]
+  ! NOTEQUALS       [ reduce using rule 6 (expression -> expression FLOORDIVISION expression .) ]
+
+
+state 30
+
+    (8) expression -> expression EXPONENT expression .
+    (2) expression -> expression . PLUS expression
+    (3) expression -> expression . MINUS expression
+    (4) expression -> expression . TIMES expression
+    (5) expression -> expression . DIVIDE expression
+    (6) expression -> expression . FLOORDIVISION expression
+    (7) expression -> expression . MODULUS expression
+    (8) expression -> expression . EXPONENT expression
+    (9) expression -> expression . GREATERTHAN expression
+    (10) expression -> expression . LESSTHAN expression
+    (11) expression -> expression . GREATERTHANEQUAL expression
+    (12) expression -> expression . LESSTHANEQUAL expression
+    (13) expression -> expression . EQUALS expression
+    (14) expression -> expression . NOTEQUALS expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for FLOORDIVISION resolved as shift
+  ! shift/reduce conflict for MODULUS resolved as shift
+  ! shift/reduce conflict for EXPONENT resolved as shift
+  ! shift/reduce conflict for GREATERTHAN resolved as shift
+  ! shift/reduce conflict for LESSTHAN resolved as shift
+  ! shift/reduce conflict for GREATERTHANEQUAL resolved as shift
+  ! shift/reduce conflict for LESSTHANEQUAL resolved as shift
+  ! shift/reduce conflict for EQUALS resolved as shift
+  ! shift/reduce conflict for NOTEQUALS resolved as shift
+    $end            reduce using rule 8 (expression -> expression EXPONENT expression .)
+    RPAREN          reduce using rule 8 (expression -> expression EXPONENT expression .)
+    PLUS            shift and go to state 9
+    MINUS           shift and go to state 19
+    TIMES           shift and go to state 17
+    DIVIDE          shift and go to state 13
+    FLOORDIVISION   shift and go to state 14
+    MODULUS         shift and go to state 8
+    EXPONENT        shift and go to state 15
+    GREATERTHAN     shift and go to state 16
+    LESSTHAN        shift and go to state 12
+    GREATERTHANEQUAL shift and go to state 20
+    LESSTHANEQUAL   shift and go to state 18
+    EQUALS          shift and go to state 11
+    NOTEQUALS       shift and go to state 10
+
+  ! PLUS            [ reduce using rule 8 (expression -> expression EXPONENT expression .) ]
+  ! MINUS           [ reduce using rule 8 (expression -> expression EXPONENT expression .) ]
+  ! TIMES           [ reduce using rule 8 (expression -> expression EXPONENT expression .) ]
+  ! DIVIDE          [ reduce using rule 8 (expression -> expression EXPONENT expression .) ]
+  ! FLOORDIVISION   [ reduce using rule 8 (expression -> expression EXPONENT expression .) ]
+  ! MODULUS         [ reduce using rule 8 (expression -> expression EXPONENT expression .) ]
+  ! EXPONENT        [ reduce using rule 8 (expression -> expression EXPONENT expression .) ]
+  ! GREATERTHAN     [ reduce using rule 8 (expression -> expression EXPONENT expression .) ]
+  ! LESSTHAN        [ reduce using rule 8 (expression -> expression EXPONENT expression .) ]
+  ! GREATERTHANEQUAL [ reduce using rule 8 (expression -> expression EXPONENT expression .) ]
+  ! LESSTHANEQUAL   [ reduce using rule 8 (expression -> expression EXPONENT expression .) ]
+  ! EQUALS          [ reduce using rule 8 (expression -> expression EXPONENT expression .) ]
+  ! NOTEQUALS       [ reduce using rule 8 (expression -> expression EXPONENT expression .) ]
+
+
+state 31
+
+    (9) expression -> expression GREATERTHAN expression .
+    (2) expression -> expression . PLUS expression
+    (3) expression -> expression . MINUS expression
+    (4) expression -> expression . TIMES expression
+    (5) expression -> expression . DIVIDE expression
+    (6) expression -> expression . FLOORDIVISION expression
+    (7) expression -> expression . MODULUS expression
+    (8) expression -> expression . EXPONENT expression
+    (9) expression -> expression . GREATERTHAN expression
+    (10) expression -> expression . LESSTHAN expression
+    (11) expression -> expression . GREATERTHANEQUAL expression
+    (12) expression -> expression . LESSTHANEQUAL expression
+    (13) expression -> expression . EQUALS expression
+    (14) expression -> expression . NOTEQUALS expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for FLOORDIVISION resolved as shift
+  ! shift/reduce conflict for MODULUS resolved as shift
+  ! shift/reduce conflict for EXPONENT resolved as shift
+  ! shift/reduce conflict for GREATERTHAN resolved as shift
+  ! shift/reduce conflict for LESSTHAN resolved as shift
+  ! shift/reduce conflict for GREATERTHANEQUAL resolved as shift
+  ! shift/reduce conflict for LESSTHANEQUAL resolved as shift
+  ! shift/reduce conflict for EQUALS resolved as shift
+  ! shift/reduce conflict for NOTEQUALS resolved as shift
+    $end            reduce using rule 9 (expression -> expression GREATERTHAN expression .)
+    RPAREN          reduce using rule 9 (expression -> expression GREATERTHAN expression .)
+    PLUS            shift and go to state 9
+    MINUS           shift and go to state 19
+    TIMES           shift and go to state 17
+    DIVIDE          shift and go to state 13
+    FLOORDIVISION   shift and go to state 14
+    MODULUS         shift and go to state 8
+    EXPONENT        shift and go to state 15
+    GREATERTHAN     shift and go to state 16
+    LESSTHAN        shift and go to state 12
+    GREATERTHANEQUAL shift and go to state 20
+    LESSTHANEQUAL   shift and go to state 18
+    EQUALS          shift and go to state 11
+    NOTEQUALS       shift and go to state 10
+
+  ! PLUS            [ reduce using rule 9 (expression -> expression GREATERTHAN expression .) ]
+  ! MINUS           [ reduce using rule 9 (expression -> expression GREATERTHAN expression .) ]
+  ! TIMES           [ reduce using rule 9 (expression -> expression GREATERTHAN expression .) ]
+  ! DIVIDE          [ reduce using rule 9 (expression -> expression GREATERTHAN expression .) ]
+  ! FLOORDIVISION   [ reduce using rule 9 (expression -> expression GREATERTHAN expression .) ]
+  ! MODULUS         [ reduce using rule 9 (expression -> expression GREATERTHAN expression .) ]
+  ! EXPONENT        [ reduce using rule 9 (expression -> expression GREATERTHAN expression .) ]
+  ! GREATERTHAN     [ reduce using rule 9 (expression -> expression GREATERTHAN expression .) ]
+  ! LESSTHAN        [ reduce using rule 9 (expression -> expression GREATERTHAN expression .) ]
+  ! GREATERTHANEQUAL [ reduce using rule 9 (expression -> expression GREATERTHAN expression .) ]
+  ! LESSTHANEQUAL   [ reduce using rule 9 (expression -> expression GREATERTHAN expression .) ]
+  ! EQUALS          [ reduce using rule 9 (expression -> expression GREATERTHAN expression .) ]
+  ! NOTEQUALS       [ reduce using rule 9 (expression -> expression GREATERTHAN expression .) ]
+
+
+state 32
+
+    (4) expression -> expression TIMES expression .
+    (2) expression -> expression . PLUS expression
+    (3) expression -> expression . MINUS expression
+    (4) expression -> expression . TIMES expression
+    (5) expression -> expression . DIVIDE expression
+    (6) expression -> expression . FLOORDIVISION expression
+    (7) expression -> expression . MODULUS expression
+    (8) expression -> expression . EXPONENT expression
+    (9) expression -> expression . GREATERTHAN expression
+    (10) expression -> expression . LESSTHAN expression
+    (11) expression -> expression . GREATERTHANEQUAL expression
+    (12) expression -> expression . LESSTHANEQUAL expression
+    (13) expression -> expression . EQUALS expression
+    (14) expression -> expression . NOTEQUALS expression
+
+    PLUS            reduce using rule 4 (expression -> expression TIMES expression .)
+    MINUS           reduce using rule 4 (expression -> expression TIMES expression .)
+    TIMES           reduce using rule 4 (expression -> expression TIMES expression .)
+    DIVIDE          reduce using rule 4 (expression -> expression TIMES expression .)
+    FLOORDIVISION   reduce using rule 4 (expression -> expression TIMES expression .)
+    MODULUS         reduce using rule 4 (expression -> expression TIMES expression .)
+    EXPONENT        reduce using rule 4 (expression -> expression TIMES expression .)
+    GREATERTHAN     reduce using rule 4 (expression -> expression TIMES expression .)
+    LESSTHAN        reduce using rule 4 (expression -> expression TIMES expression .)
+    GREATERTHANEQUAL reduce using rule 4 (expression -> expression TIMES expression .)
+    LESSTHANEQUAL   reduce using rule 4 (expression -> expression TIMES expression .)
+    EQUALS          reduce using rule 4 (expression -> expression TIMES expression .)
+    NOTEQUALS       reduce using rule 4 (expression -> expression TIMES expression .)
+    $end            reduce using rule 4 (expression -> expression TIMES expression .)
+    RPAREN          reduce using rule 4 (expression -> expression TIMES expression .)
+
+  ! PLUS            [ shift and go to state 9 ]
+  ! MINUS           [ shift and go to state 19 ]
+  ! TIMES           [ shift and go to state 17 ]
+  ! DIVIDE          [ shift and go to state 13 ]
+  ! FLOORDIVISION   [ shift and go to state 14 ]
+  ! MODULUS         [ shift and go to state 8 ]
+  ! EXPONENT        [ shift and go to state 15 ]
+  ! GREATERTHAN     [ shift and go to state 16 ]
+  ! LESSTHAN        [ shift and go to state 12 ]
+  ! GREATERTHANEQUAL [ shift and go to state 20 ]
+  ! LESSTHANEQUAL   [ shift and go to state 18 ]
+  ! EQUALS          [ shift and go to state 11 ]
+  ! NOTEQUALS       [ shift and go to state 10 ]
+
+
+state 33
+
+    (12) expression -> expression LESSTHANEQUAL expression .
+    (2) expression -> expression . PLUS expression
+    (3) expression -> expression . MINUS expression
+    (4) expression -> expression . TIMES expression
+    (5) expression -> expression . DIVIDE expression
+    (6) expression -> expression . FLOORDIVISION expression
+    (7) expression -> expression . MODULUS expression
+    (8) expression -> expression . EXPONENT expression
+    (9) expression -> expression . GREATERTHAN expression
+    (10) expression -> expression . LESSTHAN expression
+    (11) expression -> expression . GREATERTHANEQUAL expression
+    (12) expression -> expression . LESSTHANEQUAL expression
+    (13) expression -> expression . EQUALS expression
+    (14) expression -> expression . NOTEQUALS expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for FLOORDIVISION resolved as shift
+  ! shift/reduce conflict for MODULUS resolved as shift
+  ! shift/reduce conflict for EXPONENT resolved as shift
+  ! shift/reduce conflict for GREATERTHAN resolved as shift
+  ! shift/reduce conflict for LESSTHAN resolved as shift
+  ! shift/reduce conflict for GREATERTHANEQUAL resolved as shift
+  ! shift/reduce conflict for LESSTHANEQUAL resolved as shift
+  ! shift/reduce conflict for EQUALS resolved as shift
+  ! shift/reduce conflict for NOTEQUALS resolved as shift
+    $end            reduce using rule 12 (expression -> expression LESSTHANEQUAL expression .)
+    RPAREN          reduce using rule 12 (expression -> expression LESSTHANEQUAL expression .)
+    PLUS            shift and go to state 9
+    MINUS           shift and go to state 19
+    TIMES           shift and go to state 17
+    DIVIDE          shift and go to state 13
+    FLOORDIVISION   shift and go to state 14
+    MODULUS         shift and go to state 8
+    EXPONENT        shift and go to state 15
+    GREATERTHAN     shift and go to state 16
+    LESSTHAN        shift and go to state 12
+    GREATERTHANEQUAL shift and go to state 20
+    LESSTHANEQUAL   shift and go to state 18
+    EQUALS          shift and go to state 11
+    NOTEQUALS       shift and go to state 10
+
+  ! PLUS            [ reduce using rule 12 (expression -> expression LESSTHANEQUAL expression .) ]
+  ! MINUS           [ reduce using rule 12 (expression -> expression LESSTHANEQUAL expression .) ]
+  ! TIMES           [ reduce using rule 12 (expression -> expression LESSTHANEQUAL expression .) ]
+  ! DIVIDE          [ reduce using rule 12 (expression -> expression LESSTHANEQUAL expression .) ]
+  ! FLOORDIVISION   [ reduce using rule 12 (expression -> expression LESSTHANEQUAL expression .) ]
+  ! MODULUS         [ reduce using rule 12 (expression -> expression LESSTHANEQUAL expression .) ]
+  ! EXPONENT        [ reduce using rule 12 (expression -> expression LESSTHANEQUAL expression .) ]
+  ! GREATERTHAN     [ reduce using rule 12 (expression -> expression LESSTHANEQUAL expression .) ]
+  ! LESSTHAN        [ reduce using rule 12 (expression -> expression LESSTHANEQUAL expression .) ]
+  ! GREATERTHANEQUAL [ reduce using rule 12 (expression -> expression LESSTHANEQUAL expression .) ]
+  ! LESSTHANEQUAL   [ reduce using rule 12 (expression -> expression LESSTHANEQUAL expression .) ]
+  ! EQUALS          [ reduce using rule 12 (expression -> expression LESSTHANEQUAL expression .) ]
+  ! NOTEQUALS       [ reduce using rule 12 (expression -> expression LESSTHANEQUAL expression .) ]
+
+
+state 34
+
+    (3) expression -> expression MINUS expression .
+    (2) expression -> expression . PLUS expression
+    (3) expression -> expression . MINUS expression
+    (4) expression -> expression . TIMES expression
+    (5) expression -> expression . DIVIDE expression
+    (6) expression -> expression . FLOORDIVISION expression
+    (7) expression -> expression . MODULUS expression
+    (8) expression -> expression . EXPONENT expression
+    (9) expression -> expression . GREATERTHAN expression
+    (10) expression -> expression . LESSTHAN expression
+    (11) expression -> expression . GREATERTHANEQUAL expression
+    (12) expression -> expression . LESSTHANEQUAL expression
+    (13) expression -> expression . EQUALS expression
+    (14) expression -> expression . NOTEQUALS expression
+
+    PLUS            reduce using rule 3 (expression -> expression MINUS expression .)
+    MINUS           reduce using rule 3 (expression -> expression MINUS expression .)
+    FLOORDIVISION   reduce using rule 3 (expression -> expression MINUS expression .)
+    MODULUS         reduce using rule 3 (expression -> expression MINUS expression .)
+    EXPONENT        reduce using rule 3 (expression -> expression MINUS expression .)
+    GREATERTHAN     reduce using rule 3 (expression -> expression MINUS expression .)
+    LESSTHAN        reduce using rule 3 (expression -> expression MINUS expression .)
+    GREATERTHANEQUAL reduce using rule 3 (expression -> expression MINUS expression .)
+    LESSTHANEQUAL   reduce using rule 3 (expression -> expression MINUS expression .)
+    EQUALS          reduce using rule 3 (expression -> expression MINUS expression .)
+    NOTEQUALS       reduce using rule 3 (expression -> expression MINUS expression .)
+    $end            reduce using rule 3 (expression -> expression MINUS expression .)
+    RPAREN          reduce using rule 3 (expression -> expression MINUS expression .)
+    TIMES           shift and go to state 17
+    DIVIDE          shift and go to state 13
+
+  ! TIMES           [ reduce using rule 3 (expression -> expression MINUS expression .) ]
+  ! DIVIDE          [ reduce using rule 3 (expression -> expression MINUS expression .) ]
+  ! PLUS            [ shift and go to state 9 ]
+  ! MINUS           [ shift and go to state 19 ]
+  ! FLOORDIVISION   [ shift and go to state 14 ]
+  ! MODULUS         [ shift and go to state 8 ]
+  ! EXPONENT        [ shift and go to state 15 ]
+  ! GREATERTHAN     [ shift and go to state 16 ]
+  ! LESSTHAN        [ shift and go to state 12 ]
+  ! GREATERTHANEQUAL [ shift and go to state 20 ]
+  ! LESSTHANEQUAL   [ shift and go to state 18 ]
+  ! EQUALS          [ shift and go to state 11 ]
+  ! NOTEQUALS       [ shift and go to state 10 ]
+
+
+state 35
+
+    (11) expression -> expression GREATERTHANEQUAL expression .
+    (2) expression -> expression . PLUS expression
+    (3) expression -> expression . MINUS expression
+    (4) expression -> expression . TIMES expression
+    (5) expression -> expression . DIVIDE expression
+    (6) expression -> expression . FLOORDIVISION expression
+    (7) expression -> expression . MODULUS expression
+    (8) expression -> expression . EXPONENT expression
+    (9) expression -> expression . GREATERTHAN expression
+    (10) expression -> expression . LESSTHAN expression
+    (11) expression -> expression . GREATERTHANEQUAL expression
+    (12) expression -> expression . LESSTHANEQUAL expression
+    (13) expression -> expression . EQUALS expression
+    (14) expression -> expression . NOTEQUALS expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for FLOORDIVISION resolved as shift
+  ! shift/reduce conflict for MODULUS resolved as shift
+  ! shift/reduce conflict for EXPONENT resolved as shift
+  ! shift/reduce conflict for GREATERTHAN resolved as shift
+  ! shift/reduce conflict for LESSTHAN resolved as shift
+  ! shift/reduce conflict for GREATERTHANEQUAL resolved as shift
+  ! shift/reduce conflict for LESSTHANEQUAL resolved as shift
+  ! shift/reduce conflict for EQUALS resolved as shift
+  ! shift/reduce conflict for NOTEQUALS resolved as shift
+    $end            reduce using rule 11 (expression -> expression GREATERTHANEQUAL expression .)
+    RPAREN          reduce using rule 11 (expression -> expression GREATERTHANEQUAL expression .)
+    PLUS            shift and go to state 9
+    MINUS           shift and go to state 19
+    TIMES           shift and go to state 17
+    DIVIDE          shift and go to state 13
+    FLOORDIVISION   shift and go to state 14
+    MODULUS         shift and go to state 8
+    EXPONENT        shift and go to state 15
+    GREATERTHAN     shift and go to state 16
+    LESSTHAN        shift and go to state 12
+    GREATERTHANEQUAL shift and go to state 20
+    LESSTHANEQUAL   shift and go to state 18
+    EQUALS          shift and go to state 11
+    NOTEQUALS       shift and go to state 10
+
+  ! PLUS            [ reduce using rule 11 (expression -> expression GREATERTHANEQUAL expression .) ]
+  ! MINUS           [ reduce using rule 11 (expression -> expression GREATERTHANEQUAL expression .) ]
+  ! TIMES           [ reduce using rule 11 (expression -> expression GREATERTHANEQUAL expression .) ]
+  ! DIVIDE          [ reduce using rule 11 (expression -> expression GREATERTHANEQUAL expression .) ]
+  ! FLOORDIVISION   [ reduce using rule 11 (expression -> expression GREATERTHANEQUAL expression .) ]
+  ! MODULUS         [ reduce using rule 11 (expression -> expression GREATERTHANEQUAL expression .) ]
+  ! EXPONENT        [ reduce using rule 11 (expression -> expression GREATERTHANEQUAL expression .) ]
+  ! GREATERTHAN     [ reduce using rule 11 (expression -> expression GREATERTHANEQUAL expression .) ]
+  ! LESSTHAN        [ reduce using rule 11 (expression -> expression GREATERTHANEQUAL expression .) ]
+  ! GREATERTHANEQUAL [ reduce using rule 11 (expression -> expression GREATERTHANEQUAL expression .) ]
+  ! LESSTHANEQUAL   [ reduce using rule 11 (expression -> expression GREATERTHANEQUAL expression .) ]
+  ! EQUALS          [ reduce using rule 11 (expression -> expression GREATERTHANEQUAL expression .) ]
+  ! NOTEQUALS       [ reduce using rule 11 (expression -> expression GREATERTHANEQUAL expression .) ]
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for PLUS in state 23 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 23 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 23 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 23 resolved as shift
+WARNING: shift/reduce conflict for FLOORDIVISION in state 23 resolved as shift
+WARNING: shift/reduce conflict for MODULUS in state 23 resolved as shift
+WARNING: shift/reduce conflict for EXPONENT in state 23 resolved as shift
+WARNING: shift/reduce conflict for GREATERTHAN in state 23 resolved as shift
+WARNING: shift/reduce conflict for LESSTHAN in state 23 resolved as shift
+WARNING: shift/reduce conflict for GREATERTHANEQUAL in state 23 resolved as shift
+WARNING: shift/reduce conflict for LESSTHANEQUAL in state 23 resolved as shift
+WARNING: shift/reduce conflict for EQUALS in state 23 resolved as shift
+WARNING: shift/reduce conflict for NOTEQUALS in state 23 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 25 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 25 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 25 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 25 resolved as shift
+WARNING: shift/reduce conflict for FLOORDIVISION in state 25 resolved as shift
+WARNING: shift/reduce conflict for MODULUS in state 25 resolved as shift
+WARNING: shift/reduce conflict for EXPONENT in state 25 resolved as shift
+WARNING: shift/reduce conflict for GREATERTHAN in state 25 resolved as shift
+WARNING: shift/reduce conflict for LESSTHAN in state 25 resolved as shift
+WARNING: shift/reduce conflict for GREATERTHANEQUAL in state 25 resolved as shift
+WARNING: shift/reduce conflict for LESSTHANEQUAL in state 25 resolved as shift
+WARNING: shift/reduce conflict for EQUALS in state 25 resolved as shift
+WARNING: shift/reduce conflict for NOTEQUALS in state 25 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 26 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 26 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 26 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 26 resolved as shift
+WARNING: shift/reduce conflict for FLOORDIVISION in state 26 resolved as shift
+WARNING: shift/reduce conflict for MODULUS in state 26 resolved as shift
+WARNING: shift/reduce conflict for EXPONENT in state 26 resolved as shift
+WARNING: shift/reduce conflict for GREATERTHAN in state 26 resolved as shift
+WARNING: shift/reduce conflict for LESSTHAN in state 26 resolved as shift
+WARNING: shift/reduce conflict for GREATERTHANEQUAL in state 26 resolved as shift
+WARNING: shift/reduce conflict for LESSTHANEQUAL in state 26 resolved as shift
+WARNING: shift/reduce conflict for EQUALS in state 26 resolved as shift
+WARNING: shift/reduce conflict for NOTEQUALS in state 26 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 27 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 27 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 27 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 27 resolved as shift
+WARNING: shift/reduce conflict for FLOORDIVISION in state 27 resolved as shift
+WARNING: shift/reduce conflict for MODULUS in state 27 resolved as shift
+WARNING: shift/reduce conflict for EXPONENT in state 27 resolved as shift
+WARNING: shift/reduce conflict for GREATERTHAN in state 27 resolved as shift
+WARNING: shift/reduce conflict for LESSTHAN in state 27 resolved as shift
+WARNING: shift/reduce conflict for GREATERTHANEQUAL in state 27 resolved as shift
+WARNING: shift/reduce conflict for LESSTHANEQUAL in state 27 resolved as shift
+WARNING: shift/reduce conflict for EQUALS in state 27 resolved as shift
+WARNING: shift/reduce conflict for NOTEQUALS in state 27 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 29 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 29 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 29 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 29 resolved as shift
+WARNING: shift/reduce conflict for FLOORDIVISION in state 29 resolved as shift
+WARNING: shift/reduce conflict for MODULUS in state 29 resolved as shift
+WARNING: shift/reduce conflict for EXPONENT in state 29 resolved as shift
+WARNING: shift/reduce conflict for GREATERTHAN in state 29 resolved as shift
+WARNING: shift/reduce conflict for LESSTHAN in state 29 resolved as shift
+WARNING: shift/reduce conflict for GREATERTHANEQUAL in state 29 resolved as shift
+WARNING: shift/reduce conflict for LESSTHANEQUAL in state 29 resolved as shift
+WARNING: shift/reduce conflict for EQUALS in state 29 resolved as shift
+WARNING: shift/reduce conflict for NOTEQUALS in state 29 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 30 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 30 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 30 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 30 resolved as shift
+WARNING: shift/reduce conflict for FLOORDIVISION in state 30 resolved as shift
+WARNING: shift/reduce conflict for MODULUS in state 30 resolved as shift
+WARNING: shift/reduce conflict for EXPONENT in state 30 resolved as shift
+WARNING: shift/reduce conflict for GREATERTHAN in state 30 resolved as shift
+WARNING: shift/reduce conflict for LESSTHAN in state 30 resolved as shift
+WARNING: shift/reduce conflict for GREATERTHANEQUAL in state 30 resolved as shift
+WARNING: shift/reduce conflict for LESSTHANEQUAL in state 30 resolved as shift
+WARNING: shift/reduce conflict for EQUALS in state 30 resolved as shift
+WARNING: shift/reduce conflict for NOTEQUALS in state 30 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 31 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 31 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 31 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 31 resolved as shift
+WARNING: shift/reduce conflict for FLOORDIVISION in state 31 resolved as shift
+WARNING: shift/reduce conflict for MODULUS in state 31 resolved as shift
+WARNING: shift/reduce conflict for EXPONENT in state 31 resolved as shift
+WARNING: shift/reduce conflict for GREATERTHAN in state 31 resolved as shift
+WARNING: shift/reduce conflict for LESSTHAN in state 31 resolved as shift
+WARNING: shift/reduce conflict for GREATERTHANEQUAL in state 31 resolved as shift
+WARNING: shift/reduce conflict for LESSTHANEQUAL in state 31 resolved as shift
+WARNING: shift/reduce conflict for EQUALS in state 31 resolved as shift
+WARNING: shift/reduce conflict for NOTEQUALS in state 31 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 33 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 33 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 33 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 33 resolved as shift
+WARNING: shift/reduce conflict for FLOORDIVISION in state 33 resolved as shift
+WARNING: shift/reduce conflict for MODULUS in state 33 resolved as shift
+WARNING: shift/reduce conflict for EXPONENT in state 33 resolved as shift
+WARNING: shift/reduce conflict for GREATERTHAN in state 33 resolved as shift
+WARNING: shift/reduce conflict for LESSTHAN in state 33 resolved as shift
+WARNING: shift/reduce conflict for GREATERTHANEQUAL in state 33 resolved as shift
+WARNING: shift/reduce conflict for LESSTHANEQUAL in state 33 resolved as shift
+WARNING: shift/reduce conflict for EQUALS in state 33 resolved as shift
+WARNING: shift/reduce conflict for NOTEQUALS in state 33 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 35 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 35 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 35 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 35 resolved as shift
+WARNING: shift/reduce conflict for FLOORDIVISION in state 35 resolved as shift
+WARNING: shift/reduce conflict for MODULUS in state 35 resolved as shift
+WARNING: shift/reduce conflict for EXPONENT in state 35 resolved as shift
+WARNING: shift/reduce conflict for GREATERTHAN in state 35 resolved as shift
+WARNING: shift/reduce conflict for LESSTHAN in state 35 resolved as shift
+WARNING: shift/reduce conflict for GREATERTHANEQUAL in state 35 resolved as shift
+WARNING: shift/reduce conflict for LESSTHANEQUAL in state 35 resolved as shift
+WARNING: shift/reduce conflict for EQUALS in state 35 resolved as shift
+WARNING: shift/reduce conflict for NOTEQUALS in state 35 resolved as shift
