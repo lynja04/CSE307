@@ -260,16 +260,6 @@ class AssignmentStatement(Statement):
         names[self.name] = self.expression.evaluate()
 
 
-class IfStatement(Statement):
-    def __init__(self, expression, blockStatement):
-        self.expression = expression
-        self.blockStatement = blockStatement
-
-    def execute(self):
-        if self.expression.evaluate():
-            self.blockStatement.execute()
-
-
 class IfElseStatement(Statement):
     def __init__(self, expression, blockStatement, elseBlockStatement):
         self.expression = expression
@@ -332,7 +322,6 @@ def p_block_statement(p):
 def p_statement(p):
     '''statement : print_statement
                  | assignment_statement
-                 | if_statement
                  | if_else_statement
                  | while_statement
                  | block_statement'''
@@ -342,11 +331,6 @@ def p_statement(p):
 def p_print_statement(p):
     'print_statement : PRINT LPAREN expression RPAREN SEMI'
     p[0] = PrintStatement(p[3])
-
-
-def p_if_statement(p):
-    'if_statement : IF expression block_statement'
-    p[0] = IfStatement(p[2], p[3])
 
 
 def p_if_else_statement(p):
