@@ -116,85 +116,83 @@ class BinaryExpression(Expression):
         if self.operator == '+':
             if typesMatch(leftEvaluate, rightEvaluate):
                 return leftEvaluate + rightEvaluate
-            elif self.operator == '-':
-                return leftEvaluate - rightEvaluate
-            elif self.operator == '*':
-                return leftEvaluate * rightEvaluate
-            elif self.operator == '/':
-                if rightEvaluate != 0:
-                    return leftEvaluate / rightEvaluate
-                else:
-                    return "SEMANTIC ERROR"
-            elif self.operator == '//':
-                if rightEvaluate != 0:
-                    return leftEvaluate // rightEvaluate
-                else:
-                    return "SEMANTIC ERROR"
-            elif self.operator == '%':
-                if rightEvaluate != 0:
-                    return leftEvaluate % rightEvaluate
-                else:
-                    return "SEMANTIC ERROR"
-            elif self.operator == '**':
-                return leftEvaluate ** rightEvaluate
-            elif self.operator == '==':
-                if leftEvaluate == rightEvaluate:
+        elif self.operator == '-':
+            return leftEvaluate - rightEvaluate
+        elif self.operator == '*':
+            return leftEvaluate * rightEvaluate
+        elif self.operator == '/':
+            if rightEvaluate != 0:
+                return leftEvaluate / rightEvaluate
+            else:
+                return "SEMANTIC ERROR"
+        elif self.operator == '//':
+            if rightEvaluate != 0:
+                return leftEvaluate // rightEvaluate
+            else:
+                return "SEMANTIC ERROR"
+        elif self.operator == '%':
+            if rightEvaluate != 0:
+                return leftEvaluate % rightEvaluate
+            else:
+                return "SEMANTIC ERROR"
+        elif self.operator == '**':
+            return leftEvaluate ** rightEvaluate
+        elif self.operator == '==':
+            if leftEvaluate == rightEvaluate:
+                return 1
+            else:
+                return 0
+        elif self.operator == '<':
+            if leftEvaluate < rightEvaluate:
+                return 1
+            else:
+                return 0
+        elif self.operator == '>':
+            if leftEvaluate > rightEvaluate:
+                return 1
+            else:
+                return 0
+        elif self.operator == '<=':
+            if leftEvaluate < rightEvaluate:
+                return 1
+            elif leftEvaluate == rightEvaluate:
+                return 1
+            else:
+                return 0
+        elif self.operator == '>=':
+            if leftEvaluate > rightEvaluate:
+                return 1
+            elif leftEvaluate == rightEvaluate:
+                return 1
+            else:
+                return 0
+        elif self.operator == '<>':
+            if leftEvaluate != rightEvaluate:
+                return 1
+            else:
+                return 0
+        elif self.operator == 'and':
+            if leftEvaluate == 1 or leftEvaluate > 0:
+                if rightEvaluate == 1:
+                    return 1
+                elif rightEvaluate > 0:
                     return 1
                 else:
                     return 0
-            elif self.operator == '<':
-                if leftEvaluate < rightEvaluate:
-                    return 1
-                else:
-                    return 0
-            elif self.operator == '>':
-                if leftEvaluate > rightEvaluate:
-                    return 1
-                else:
-                    return 0
-            elif self.operator == '<=':
-                if leftEvaluate < rightEvaluate:
-                    return 1
-                elif leftEvaluate == rightEvaluate:
-                    return 1
-                else:
-                    return 0
-            elif self.operator == '>=':
-                if leftEvaluate > rightEvaluate:
-                    return 1
-                elif leftEvaluate == rightEvaluate:
-                    return 1
-                else:
-                    return 0
-            elif self.operator == '<>':
-                if leftEvaluate != rightEvaluate:
-                    return 1
-                else:
-                    return 0
-            elif self.operator == 'and':
-                if leftEvaluate == 1 or leftEvaluate > 0:
-                    if rightEvaluate == 1:
-                        return 1
-                    elif rightEvaluate > 0:
-                        return 1
-                    else:
-                        return 0
-                else:
-                    return 0
-            elif self.operator == 'or':
-                if leftEvaluate == 1:
-                    return 1
-                elif rightEvaluate == 1:
-                    return 1
-                elif rightEvaluate > 0 or leftEvaluate > 0:
-                    return 1
-                else:
-                    return 0
-            elif self.operator == 'in':
-                if leftEvaluate in rightEvaluate:
-                    return 1
-                else:
-                    return 0
+        elif self.operator == 'or':
+            if leftEvaluate == 1:
+                return 1
+            elif rightEvaluate == 1:
+                return 1
+            elif rightEvaluate > 0 or leftEvaluate > 0:
+                return 1
+            else:
+                return 0
+        elif self.operator == 'in':
+            if leftEvaluate in rightEvaluate:
+                return 1
+            else:
+                return 0
 
 
 class NameExpression(Expression):
@@ -261,14 +259,14 @@ class AssignmentStatement(Statement):
 
 
 class IfElseStatement(Statement):
-    def __init__(self, expression, blockStatement, elseBlockStatement):
+    def __init__(self, expression, ifBlockStatement, elseBlockStatement):
         self.expression = expression
-        self.blockStatement = blockStatement
+        self.ifBlockStatement = ifBlockStatement
         self.elseBlockStatement = elseBlockStatement
 
     def execute(self):
         if self.expression.evaluate():
-            self.blockStatement.execute()
+            self.ifBlockStatement.execute()
         else:
             self.elseBlockStatement.execute()
 
@@ -432,23 +430,6 @@ def p_expression_innerList(p):
 def p_expression_indexExpression(p):
     'index_expression : expression LBRACKET expression RBRACKET'
     p[0] = IndexExpression(p[1], p[3])
-
-#
-# def p_expression_indexed_string(p):
-#     'INDEXED_STRING : STRING LBRACKET expression RBRACKET'
-#     if p[3] > len(p[1]):
-#         p[0] = "SEMANTIC ERROR"
-#     else:
-#         p[0] = IndexExpression(p[1], [p[3]])
-#
-#
-# def p_expression_indexed_list(p):
-#     'INDEXED_LIST : LIST LBRACKET expression RBRACKET'
-#     if p[3] > len(p[1]):
-#         p[0] = "SEMANTIC ERROR"
-#     else:
-#         p[0] = IndexExpression(p[1], p[3])
-
 
 def p_error(p):
     pass
