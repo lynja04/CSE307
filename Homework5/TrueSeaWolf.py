@@ -259,6 +259,19 @@ class AssignmentStatement(Statement):
         names[self.name] = self.expression.evaluate()
 
 
+class IndexedAssignmentStatement(Statement):
+    def __init__(self, name, index, expression):
+        self.name = name
+        self.index = index
+        self.expression = expression
+
+    def execute(self):
+        potentialList = names[self.name]
+        indexEvaluated = self.index.evaluate()
+        if (isinstance(potentialList, list) or isinstance(potentialList, str)) and isinstance(indexEvaluated, int):
+            names[self.name][indexEvaluated] = self.expression.evaluate()
+
+
 class IfStatement(Statement):
     def __init__(self, expression, blockStatement):
         self.expression = expression
@@ -361,6 +374,11 @@ def p_while_statement(p):
 def p_assignment_statement(p):
     'assignment_statement : NAME EQUAL expression SEMI'
     p[0] = AssignmentStatement(p[1], p[3])
+
+
+def p_assignment_statement_list(p):
+    'assignment_statement : NAME LBRACKET expression RBRACKET EQUALS expression SEMI'
+    p[0] = IndexedAssignmentStatement(p[1], p[3], p[6])
 
 
 def p_expression_name(p):
