@@ -223,8 +223,9 @@ class IndexExpression(Expression):
     def evaluate(self):
         baseEvaluated = self.base.evaluate()
         indexEvaluated = self.index.evaluate()
-        if indexEvaluated < len(baseEvaluated):
-            return baseEvaluated[indexEvaluated]
+        if (isinstance(baseEvaluated, list) or isinstance(baseEvaluated, str)) and isinstance(indexEvaluated, int):
+            if indexEvaluated < len(baseEvaluated):
+                return baseEvaluated[indexEvaluated]
 
 
 class Statement:
@@ -256,6 +257,16 @@ class AssignmentStatement(Statement):
 
     def execute(self):
         names[self.name] = self.expression.evaluate()
+
+
+class IfStatement(Statement):
+    def __init__(self, expression, blockStatement):
+        self.expression = expression
+        self.blockStatement = blockStatement
+
+    def execute(self):
+        if self.expression.evaluate():
+            self.blockStatement.execute()
 
 
 class IfElseStatement(Statement):
@@ -320,6 +331,7 @@ def p_block_statement(p):
 def p_statement(p):
     '''statement : print_statement
                  | assignment_statement
+                 | if_statement
                  | if_else_statement
                  | while_statement
                  | block_statement'''
@@ -329,6 +341,11 @@ def p_statement(p):
 def p_print_statement(p):
     'print_statement : PRINT LPAREN expression RPAREN SEMI'
     p[0] = PrintStatement(p[3])
+
+
+def p_if_statement(p):
+    'if_statement : IF expression block_statement'
+    p[0] = IfStatement(p[2], p[3])
 
 
 def p_if_else_statement(p):
@@ -437,9 +454,9 @@ def p_error(p):
 import ply.yacc as yacc
 import sys
 parser = yacc.yacc()
-# r = open(sys.argv[1], "r")
+# r = open("test.txt", "r")
 # for line in r:
-#     yacc.parse(line)
+#     parser.parse(line)
 while True:
     try:
         s = input('> ')
