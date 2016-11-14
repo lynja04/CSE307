@@ -377,7 +377,7 @@ def p_assignment_statement(p):
 
 
 def p_assignment_statement_list(p):
-    'assignment_statement : NAME LBRACKET expression RBRACKET EQUALS expression SEMI'
+    'assignment_statement : NAME LBRACKET expression RBRACKET EQUAL expression SEMI'
     p[0] = IndexedAssignmentStatement(p[1], p[3], p[6])
 
 
