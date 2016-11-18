@@ -472,13 +472,6 @@ def p_error(p):
 import ply.yacc as yacc
 import sys
 parser = yacc.yacc()
-file = open("test2.txt", "r")
+file = open(sys.argv[1], "r")
 program = file.read()
 parser.parse(program)
-
-# while True:
-#     try:
-#         s = input('> ')
-#     except EOFError:
-#         break
-#     parser.parse(s)
