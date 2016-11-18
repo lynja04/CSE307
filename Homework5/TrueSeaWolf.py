@@ -462,12 +462,14 @@ def p_expression_innerList(p):
     else:
         p[0] = p[1] + [p[3].evaluate()]
 
+
 def p_expression_indexExpression(p):
     'index_expression : expression LBRACKET expression RBRACKET'
     p[0] = IndexExpression(p[1], p[3])
 
+
 def p_error(p):
-    pass
+    print("SYNTAX ERROR")
 
 import ply.yacc as yacc
 import sys
