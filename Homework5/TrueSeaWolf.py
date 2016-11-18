@@ -116,6 +116,8 @@ class BinaryExpression(Expression):
         if self.operator == '+':
             if typesMatch(leftEvaluate, rightEvaluate):
                 return leftEvaluate + rightEvaluate
+            else:
+                return "SYNTAX ERROR"
         elif self.operator == '-':
             return leftEvaluate - rightEvaluate
         elif self.operator == '*':
@@ -193,6 +195,18 @@ class BinaryExpression(Expression):
                 return 1
             else:
                 return 0
+
+
+class UnaryExpression(Expression):
+    def __init__(self, operator, operand):
+        self.operator = operator
+        self.operand = operand
+
+    def evaluate(self):
+        if self.right == 0:
+            return 1
+        else:
+            0
 
 
 class NameExpression(Expression):
@@ -422,17 +436,9 @@ def p_expression_operators(p):
         p[0] = BinaryExpression(p[1], p[2], p[3])
 
 
-def p_expression_uminus(p):
-    'expression : MINUS expression %prec UMINUS'
-    p[0] = -p[2]
-
-
-def p_expression_not(p):
+def p_unary_expression(p):
     'expression : NOT expression'
-    if p[2] == 0:
-        p[0] = 1
-    else:
-        p[0] = 0
+    p[0] = UnaryExpression(p[1], p[2])
 
 
 def p_expression_types(p):
